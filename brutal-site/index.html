@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BRUTAL — Francesinha à Moda do Porto · Portimão</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Abril+Fatface&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="../css/style.css" />
+</head>
+<body>
+
+<!-- ═══ NAVIGATION ═══════════════════════════════════ -->
+<nav>
+  <a href="#hero" class="nav-logo">BRUTAL</a>
+  <ul class="nav-links">
+    <li><a href="#sobre">Sobre</a></li>
+    <li><a href="#menu">Menu</a></li>
+    <li><a href="#reviews">Avaliações</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <button class="nav-hamburger" id="hamburger" aria-label="Menu" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Drawer -->
+<div class="mobile-drawer" id="mobileDrawer">
+  <a href="#sobre"    onclick="closeDrawer()">Sobre</a>
+  <a href="#menu"     onclick="closeDrawer()">Menu</a>
+  <a href="#reviews"  onclick="closeDrawer()">Avaliações</a>
+  <a href="#contacto" onclick="closeDrawer()">Contacto</a>
+  <div class="drawer-contact">
+    <div style="margin-bottom:0.5rem">Reservas &amp; Info</div>
+    <a href="tel:+351282492018">+351 282 492 018</a>
+  </div>
+</div>
+
+<!-- ═══ HERO ════════════════════════════════════════ -->
+<section id="hero">
+  <div class="hero-bg"></div>
+
+  <div class="hero-rule"></div>
+  <p class="hero-eyebrow">Francesinha à Moda do Porto · Portimão, Algarve</p>
+  <h1 class="hero-title">BRU<span>·</span><br>TAL</h1>
+  <p class="hero-subtitle">O sabor do Porto no coração do Algarve. Uma viagem gastronómica ao Norte, sem sair de Portimão.</p>
+
+  <div class="hero-cta">
+    <a href="#menu" class="btn btn-primary">Ver Menu</a>
+    <a href="#contacto" class="btn btn-outline">Reservar Mesa</a>
+    <a href="https://wa.me/351282492018?text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Brutal.%20Podiam%20indicar%20disponibilidade%3F%20Obrigado!" class="btn btn-whatsapp" target="_blank" rel="noopener">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:0.4em;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      WhatsApp
+    </a>
+  </div>
+
+  <div class="hero-badge">
+    <div class="hero-badge-inner">
+      <div class="badge-star">★</div>
+      4.6
+      <br>mais de
+      <br>1200+ reviews
+    </div>
+  </div>
+
+  <div class="scroll-indicator">Scroll</div>
+</section>
+
+<!-- ═══ SOBRE ════════════════════════════════════════ -->
+<section id="sobre">
+  <div class="about-grid">
+    <div class="about-text reveal">
+      <p class="section-label">A nossa história</p>
+      <h2 class="section-title">Sabor do Porto<br><em>no Algarve</em></h2>
+
+      <p>O <strong>BRUTAL</strong> nasceu da vontade de trazer o toque especial do Porto ao Algarve — o aconchego, o amor e o sabor da Invicta, em pleno coração de Portimão.</p>
+
+      <p>Com uma <strong>Chef nascida no Porto</strong> com mais de 30 anos de experiência, cada francesinha é feita com dedicação, com o molho tradicional preparado todos os dias — às vezes mais do que uma vez, para garantir o sabor certo.</p>
+
+      <p>Um espaço modesto e aconchegante, onde cada cliente é convidado a fazer uma viagem ao <strong>ambiente nortenho</strong>. A nossa pequena equipa satisfaz-se com a passagem de cada cliente pelo BRUTAL.</p>
+
+      <blockquote class="quote-block">
+        "A nossa especialidade é a Francesinha, feita sempre com amor e dedicação."
+        <br><small style="font-size:0.85rem; color: var(--muted); font-style:normal;">— Maria de Fátima, Chef</small>
+      </blockquote>
+    </div>
+
+    <div class="about-visual reveal">
+      <div class="about-card">
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-num">30+</div>
+            <div class="stat-label">Anos de Exp.</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">1200+</div>
+            <div class="stat-label">Avaliações</div>
+          </div>
+          <div class="stat">
+            <div class="stat-num">4.6★</div>
+            <div class="stat-label">Classificação</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--border);">
+          <p class="section-label">O que nos distingue</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 0.8rem; margin-top: 1rem;">
+            <li style="display: flex; gap: 1rem; color: rgba(245,237,224,0.75); font-size:1rem;">
+              <span style="color: var(--gold);">→</span> Molho caseiro feito todos os dias
+            </li>
+            <li style="display: flex; gap: 1rem; color: rgba(245,237,224,0.75); font-size:1rem;">
+              <span style="color: var(--gold);">→</span> Receita autêntica do Porto
+            </li>
+            <li style="display: flex; gap: 1rem; color: rgba(245,237,224,0.75); font-size:1rem;">
+              <span style="color: var(--gold);">→</span> Ingredientes selecionados diariamente
+            </li>
+            <li style="display: flex; gap: 1rem; color: rgba(245,237,224,0.75); font-size:1rem;">
+              <span style="color: var(--gold);">→</span> Opções para todos — incluindo vegetariano
+            </li>
+            <li style="display: flex; gap: 1rem; color: rgba(245,237,224,0.75); font-size:1rem;">
+              <span style="color: var(--gold);">→</span> Preço justo · €10–15 por pessoa
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ MENU ══════════════════════════════════════════ -->
+<section id="menu">
+  <div class="menu-intro reveal">
+    <p class="section-label">O que servimos</p>
+    <h2 class="section-title">Menu</h2>
+    <p>24 pratos feitos com amor. A especialidade da casa é a Francesinha à moda do Porto — com molho secreto preparado todos os dias.</p>
+  </div>
+
+  <div class="menu-tabs reveal">
+    <button class="tab-btn active" onclick="switchTab('francesinhas')">Francesinhas</button>
+    <button class="tab-btn" onclick="switchTab('snacks')">Snacks</button>
+    <button class="tab-btn" onclick="switchTab('pratos')">Pratos</button>
+    <button class="tab-btn" onclick="switchTab('sobremesas')">Sobremesas</button>
+    <button class="tab-btn" onclick="switchTab('bebidas')">Bebidas</button>
+  </div>
+
+  <div id="tab-francesinhas" class="tab-panel active reveal">
+    <div class="menu-grid">
+      <div class="menu-item featured">
+        <div class="item-info">
+          <div class="item-badge">Especialidade</div>
+          <div class="item-name">Francesinha Clássica</div>
+          <div class="item-desc">Pão, bife de vaca, linguiça, fiambre, queijo, molho secreto, ovo estrelado e batata frita caseira</div>
+        </div>
+        <div class="item-price">10€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Francesinha de Frango</div>
+          <div class="item-desc">Bife de frango, linguiça, fiambre, queijo, molho especial, ovo estrelado e batata frita caseira</div>
+        </div>
+        <div class="item-price">10€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Francesinha XL</div>
+          <div class="item-desc">A versão grande para partilhar — perfeita para dois com apetite</div>
+        </div>
+        <div class="item-price">16€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Francesinha Vegetariana</div>
+          <div class="item-desc">Seitan marinado, cogumelos salteados, queijo, batata frita caseira, molho de francesinha vegan</div>
+        </div>
+        <div class="item-price">9.5€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Francesinha com Picante</div>
+          <div class="item-desc">Clássica com molho picante servido à parte — para os mais aventureiros</div>
+        </div>
+        <div class="item-price">10.5€</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-snacks" class="tab-panel reveal">
+    <div class="menu-grid">
+      <div class="menu-item featured">
+        <div class="item-info">
+          <div class="item-badge">Popular</div>
+          <div class="item-name">Hambúrguer à Brutal</div>
+          <div class="item-desc">O hambúrguer da casa com todos os extras — pão artesanal, carne, queijo e molho especial</div>
+        </div>
+        <div class="item-price">8.5€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Escondinho</div>
+          <div class="item-desc">Snack tradicional nortenho — pão, carne, queijo e molho da casa</div>
+        </div>
+        <div class="item-price">6€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Cachorro</div>
+          <div class="item-desc">Pão de cachorro, fiambre, queijo, salsicha fresca, batata frita caseira e molho</div>
+        </div>
+        <div class="item-price">5.5€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Batata Frita Caseira</div>
+          <div class="item-desc">Batata cortada à mão, frita na hora — acompanhamento perfeito</div>
+        </div>
+        <div class="item-price">3€</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-pratos" class="tab-panel reveal">
+    <div class="menu-grid">
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Bife de Vaca</div>
+          <div class="item-desc">Bife de vaca grelhado, batata frita caseira, ovo estrelado, arroz e salada</div>
+        </div>
+        <div class="item-price">11€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Bife de Frango</div>
+          <div class="item-desc">Bife de frango grelhado, batata frita caseira, ovo estrelado, arroz e salada</div>
+        </div>
+        <div class="item-price">9.5€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Bife de Porco</div>
+          <div class="item-desc">Bife de porco grelhado, batata frita caseira, ovo estrelado, arroz e salada</div>
+        </div>
+        <div class="item-price">9.5€</div>
+      </div>
+      <div class="menu-item featured">
+        <div class="item-info">
+          <div class="item-badge">Dia</div>
+          <div class="item-name">Prato do Dia</div>
+          <div class="item-desc">Confira com a nossa equipa — feito todos os dias com ingredientes frescos</div>
+        </div>
+        <div class="item-price">— €</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-sobremesas" class="tab-panel reveal">
+    <div class="menu-grid">
+      <div class="menu-item featured">
+        <div class="item-info">
+          <div class="item-badge">Favorita</div>
+          <div class="item-name">Mousse de Chocolate</div>
+          <div class="item-desc">Feita na casa — cremosa, intensa e irresistível</div>
+        </div>
+        <div class="item-price">3.5€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Banana com Chocolate</div>
+          <div class="item-desc">Banana fresca com calda de chocolate quente</div>
+        </div>
+        <div class="item-price">3€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Gelado do Dia</div>
+          <div class="item-desc">Pergunta à equipa os sabores disponíveis</div>
+        </div>
+        <div class="item-price">2.5€</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="tab-bebidas" class="tab-panel reveal">
+    <div class="menu-grid">
+      <div class="menu-item featured">
+        <div class="item-info">
+          <div class="item-badge">Recomendada</div>
+          <div class="item-name">Sangria da Casa</div>
+          <div class="item-desc">Sangria artesanal — divinal, segundo os nossos clientes</div>
+        </div>
+        <div class="item-price">5€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Cerveja Imperial</div>
+          <div class="item-desc">Fresca, gelada, perfeita para acompanhar a francesinha</div>
+        </div>
+        <div class="item-price">2€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Vinho da Casa</div>
+          <div class="item-desc">Tinto ou branco — pergunta as opções disponíveis</div>
+        </div>
+        <div class="item-price">3.5€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Café / Galão / Meia de Leite</div>
+          <div class="item-desc">Para terminar em grande</div>
+        </div>
+        <div class="item-price">1.2€</div>
+      </div>
+      <div class="menu-item">
+        <div class="item-info">
+          <div class="item-name">Refrigerantes</div>
+          <div class="item-desc">Cola, água, sumos naturais</div>
+        </div>
+        <div class="item-price">2€</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ REVIEWS ══════════════════════════════════════ -->
+<section id="reviews">
+  <div class="reveal">
+    <p class="section-label">O que dizem de nós</p>
+    <h2 class="section-title">Avaliações</h2>
+    <div class="stars-display">★★★★★</div>
+    <p class="rating-meta"><strong>4.6 / 5</strong> &nbsp;·&nbsp; mais de 1.200 avaliações &nbsp;·&nbsp; Restaurant Guru · TripAdvisor</p>
+  </div>
+
+  <div class="reviews-grid reveal">
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Melhor francesinha fora do Porto. Já há mais de dois anos que não comia uma francesinha assim verdadeiramente espetacular. Parabéns a toda a equipa!"</p>
+      <div class="review-author">Viajante &nbsp;<span>· TripAdvisor</span></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Francesinhas maravilhosas com um molho bem saboroso — as melhores que já comi em Portimão, e já comi em todas as casas de francesinha por cá."</p>
+      <div class="review-author">Cliente Local &nbsp;<span>· TripAdvisor</span></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Atendimento brutal, comida brutal, sobremesa brutal, bebida brutal. Uma sangria divinal. Quanto à francesinha, é simplesmente brutaaaaallll..."</p>
+      <div class="review-author">Visitante &nbsp;<span>· Restaurant Guru</span></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★☆</div>
+      <p class="review-text">"Local excelente com serviço excelente, comida deliciosa e preços acessíveis. Destaque para a Francesinha com frango e os incríveis doces."</p>
+      <div class="review-author">Turista &nbsp;<span>· Restaurant Guru</span></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Melhor sítio do Algarve para comer francesinha à moda do Porto. Aconselho vivamente. Excelente serviço, espaço e decoração. Preço/qualidade ótimo."</p>
+      <div class="review-author">Visitante &nbsp;<span>· TripAdvisor</span></div>
+    </div>
+    <div class="review-card">
+      <div class="review-stars">★★★★★</div>
+      <p class="review-text">"Se você quer comer uma francesinha no Algarve, deve ir lá: todos os tipos de francesinhas, garçons simpáticos e comida gostosa. Voltaremos!"</p>
+      <div class="review-author">Turista BR &nbsp;<span>· Cardápio</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CONTACTO ═════════════════════════════════════ -->
+<section id="contacto">
+  <div class="contact-grid">
+    <div>
+      <p class="section-label">Encontre-nos</p>
+      <h2 class="section-title reveal">Visita-nos</h2>
+
+      <div class="contact-item reveal">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-label">Morada</div>
+          <div class="contact-value">Loja D, Rua Machado de Castro 3<br>8500-303 Portimão, Portugal</div>
+        </div>
+      </div>
+
+      <div class="contact-item reveal">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-label">Telefone</div>
+          <div class="contact-value"><a href="tel:+351282492018">+351 282 492 018</a></div>
+        </div>
+      </div>
+
+      <div class="contact-item reveal">
+        <div class="contact-icon">🕐</div>
+        <div>
+          <div class="contact-label">Horário</div>
+          <div class="contact-value">
+            <div class="hours-grid" style="margin-top: 0.5rem;">
+              <span class="hours-day">Segunda</span><span class="hours-time">10:00 – 22:00</span>
+              <span class="hours-day">Terça</span><span class="hours-time">10:00 – 22:00</span>
+              <span class="hours-day">Quarta</span><span class="hours-time">10:00 – 22:00</span>
+              <span class="hours-day">Quinta</span><span class="hours-time">10:00 – 22:00</span>
+              <span class="hours-day">Sexta</span><span class="hours-time">10:00 – 22:00</span>
+              <span class="hours-day">Sábado</span><span class="hours-time">10:00 – 22:00</span>
+              <span class="hours-day">Domingo</span><span class="hours-time" style="color: var(--rust);">Fechado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-item reveal">
+        <div class="contact-icon">💳</div>
+        <div>
+          <div class="contact-label">Pagamento</div>
+          <div class="contact-value">Apenas numerário · Estacionamento gratuito na rua</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="map-placeholder">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3133.1!2d-8.5552007!3d37.1420173!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1ab30f97cc7561%3A0x46b0c89d6e73fa4b!2sBrital%20-%20Portim%C3%A3o!5e0!3m2!1spt!2spt!4v1"
+          loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mapa BRUTAL Portimão">
+        </iframe>
+        <p style="margin-top: 1.5rem; font-family: 'Space Mono', monospace; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--muted);">
+          Rua Machado de Castro 3, Portimão
+        </p>
+      </div>
+
+      <div style="margin-top: 2rem; padding: 2rem; background: rgba(168,62,28,0.1); border-left: 2px solid var(--rust);">
+        <p class="section-label" style="margin-bottom: 0.5rem;">Reservas</p>
+        <p style="color: rgba(245,237,224,0.7); font-size:1rem; font-style:italic; margin-bottom: 1.2rem;">
+          Para garantir a sua mesa, ligue-nos ou envie mensagem. Aconselhamos reserva, especialmente ao fim de semana.
+        </p>
+        <div style="display:flex; gap:1rem; flex-wrap:wrap;">
+          <a href="tel:+351282492018" class="btn btn-primary" style="display: inline-block;">
+            Reservar agora
+          </a>
+          <a href="https://wa.me/351282492018?text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Brutal.%20Podiam%20indicar%20disponibilidade%3F%20Obrigado!" class="btn btn-whatsapp" target="_blank" rel="noopener" style="display:inline-block;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" style="vertical-align:middle; margin-right:0.4em;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+            WhatsApp
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FLOATING WHATSAPP ════════════════════════════ -->
+<a href="https://wa.me/351282492018?text=Olá!%20Gostaria%20de%20fazer%20uma%20reserva%20no%20Brutal.%20Podiam%20indicar%20disponibilidade%3F%20Obrigado!" class="whatsapp-float" target="_blank" rel="noopener" aria-label="Reservar via WhatsApp">
+  <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+  <span class="whatsapp-float-label">Reservar</span>
+</a>
+
+
+<footer>
+  <div>
+    <div class="footer-logo">BRUTAL</div>
+    <div class="footer-tagline">O sabor do Porto no Algarve</div>
+  </div>
+  <div class="footer-copy">
+    © 2025 BRUTAL · Portimão · Todos os direitos reservados
+  </div>
+</footer>
+
+<script>
+  function switchTab(name) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById('tab-' + name).classList.add('active');
+    event.target.classList.add('active');
+  }
+
+  function toggleDrawer() {
+    const drawer = document.getElementById('mobileDrawer');
+    const btn = document.getElementById('hamburger');
+    const isOpen = drawer.classList.contains('open');
+    if (isOpen) {
+      drawer.classList.remove('open');
+      btn.classList.remove('open');
+      document.body.style.overflow = '';
+    } else {
+      drawer.classList.add('open');
+      btn.classList.add('open');
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  function closeDrawer() {
+    document.getElementById('mobileDrawer').classList.remove('open');
+    document.getElementById('hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.08 });
+  reveals.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
