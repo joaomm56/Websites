@@ -3,7 +3,7 @@
    ============================================================ */
 
 const SVC          = { corte:'Corte & Styling', coloracao:'Coloração', tratamento:'Tratamentos', noiva:'Noiva', massagem:'Massagem', barba:'Barba' };
-const STL          = { ana:'Ana Menezes', joao:'João Menezes', '':'Sem preferência' };
+const STL          = { ana:'Ana Menezes', anderson:'Anderson Menezes', '':'Sem preferência' };
 const MONTHS_PT    = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const MONTHS_SHORT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const DAYS_PT      = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
@@ -204,6 +204,7 @@ function showPage(name, el) {
   document.querySelectorAll('.mobile-nav-btn').forEach(b => {
     if (b.dataset.page === name) b.classList.add('active');
   });
+  if (name === 'settings') initSettings();
 }
 
 function showToast(title, msg) {
@@ -217,3 +218,62 @@ function showToast(title, msg) {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
 });
+
+/* ── DEFINIÇÕES ──────────────────────────────────────────── */
+function initSettings() {
+  const user = sessionStorage.getItem('admin_user') || '';
+  document.getElementById('settingsCurrentUser').value = user;
+}
+
+async function saveSettings() {
+  const currentUser = sessionStorage.getItem('admin_user') || '';
+  const newUser     = document.getElementById('settingsNewUser').value.trim().toLowerCase();
+  const newPass     = document.getElementById('settingsNewPass').value;
+  const confirmPass = document.getElementById('settingsConfirmPass').value;
+  const errEl       = document.getElementById('settingsError');
+  const okEl        = document.getElementById('settingsSuccess');
+
+  errEl.style.display = 'none';
+  okEl.style.display  = 'none';
+
+  if (!newUser && !newPass) {
+    errEl.textContent = 'Introduza um novo utilizador ou password.';
+    errEl.style.display = 'block'; return;
+  }
+  if (newPass && newPass !== confirmPass) {
+    errEl.textContent = 'As passwords não coincidem.';
+    errEl.style.display = 'block'; return;
+  }
+  if (newPass && newPass.length < 6) {
+    errEl.textContent = 'A password deve ter pelo menos 6 caracteres.';
+    errEl.style.display = 'block'; return;
+  }
+
+  const updates = {};
+  if (newUser) updates.username = newUser;
+  if (newPass) updates.password = newPass;
+
+  // Build SQL dynamically
+  const setClauses = Object.entries(updates).map(([k, v]) => `${k} = '${v.replace(/'/g,"''")}'`).join(', ');
+  const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/update_admin_credentials`, {
+    method: 'POST',
+    headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+    body: JSON.stringify({ p_current_username: currentUser, ...updates.username ? { p_new_username: updates.username } : { p_new_username: currentUser }, ...updates.password ? { p_new_password: updates.password } : { p_new_password: null } })
+  });
+
+  if (!res.ok) {
+    errEl.textContent = 'Erro ao guardar. Tente novamente.';
+    errEl.style.display = 'block'; return;
+  }
+
+  // Update session
+  if (newUser) {
+    sessionStorage.setItem('admin_user', newUser);
+    document.getElementById('sidebarUser').textContent = newUser.charAt(0).toUpperCase() + newUser.slice(1);
+    document.getElementById('settingsCurrentUser').value = newUser;
+    document.getElementById('settingsNewUser').value = '';
+  }
+  document.getElementById('settingsNewPass').value = '';
+  document.getElementById('settingsConfirmPass').value = '';
+  okEl.style.display = 'block';
+}

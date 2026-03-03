@@ -57,16 +57,31 @@ async function onDateOrStylistChange() {
     console.warn('Slots: erro ao obter ocupados, mostrar todos livres:', err.message);
   }
 
-  renderSlots(d.getDay() === 6 ? SLOTS_SATURDAY : SLOTS_WEEKDAY, occupiedTimes);
+  // Se for hoje, filtrar slots já passados
+  const today = new Date();
+  const isToday = date === today.toISOString().split('T')[0];
+  renderSlots(d.getDay() === 6 ? SLOTS_SATURDAY : SLOTS_WEEKDAY, occupiedTimes, isToday ? today : null);
 }
 
-function renderSlots(slots, occupiedTimes) {
+function renderSlots(slots, occupiedTimes, now = null) {
   const container = document.getElementById('timeslots');
   if (selectedTime && occupiedTimes.includes(selectedTime)) {
     selectedTime = null;
     document.getElementById('selectedTime').value = '';
   }
   container.innerHTML = slots.map(time => {
+    // Verificar se o slot já passou (só para hoje)
+    if (now) {
+      const [h, m] = time.split(':').map(Number);
+      const slotMinutes = h * 60 + m;
+      const nowMinutes  = now.getHours() * 60 + now.getMinutes();
+      if (slotMinutes <= nowMinutes) {
+        return `<div class="slot occupied">
+          <span class="slot-time">${time}</span>
+          <span class="slot-label">Passado</span>
+        </div>`;
+      }
+    }
     if (occupiedTimes.includes(time)) {
       return `<div class="slot occupied">
         <span class="slot-time">${time}</span>

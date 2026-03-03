@@ -3,7 +3,7 @@
    ============================================================ */
 
 const SERVICE_NAMES = { corte:'Corte & Styling', coloracao:'Coloração', tratamento:'Tratamentos Capilares', noiva:'Penteados Noiva', massagem:'Massagem Capilar', barba:'Barba & Bigode' };
-const STYLIST_NAMES = { ana:'Ana Menezes', joao:'João Menezes', '':'Sem preferência' };
+const STYLIST_NAMES = { ana:'Ana Menezes', anderson:'Anderson Menezes', '':'Sem preferência' };
 const MONTHS_SHORT  = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
 let cancelTargetId = null;

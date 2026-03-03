@@ -17,7 +17,7 @@
     <h2>Bem-vindo de volta</h2>
     <div class="login-group">
       <label>Utilizador</label>
-      <input type="text" id="loginUser" placeholder="admin" value="admin">
+      <input type="text" id="loginUser" placeholder="">
     </div>
     <div class="login-group">
       <label>Palavra-passe</label>
@@ -39,6 +39,7 @@
       <button class="mobile-nav-btn active" onclick="showPage('dashboard', this)" data-page="dashboard">📊 Dashboard</button>
       <button class="mobile-nav-btn" onclick="showPage('bookings', this)" data-page="bookings">📅 Marcações</button>
       <button class="mobile-nav-btn" onclick="showPage('calendar', this)" data-page="calendar">🗓️ Calendário</button>
+      <button class="mobile-nav-btn" onclick="showPage('settings', this)" data-page="settings">⚙️ Definições</button>
     </div>
     <div class="mobile-nav-actions">
       <span id="mobileUser"></span>
@@ -64,6 +65,9 @@
         <span class="icon">🗓️</span> Calendário
       </div>
       <div class="nav-section" style="margin-top:20px">Definições</div>
+      <div class="sidebar-link" onclick="showPage('settings', this)">
+        <span class="icon">⚙️</span> Definições
+      </div>
       <div class="sidebar-link" onclick="window.location='index.html'">
         <span class="icon">🌐</span> Ver Site
       </div>
@@ -191,6 +195,42 @@
       </div><!-- /page-body -->
     </div>
 
+
+    <div class="page" id="page-settings">
+      <div class="page-hdr">
+        <h1>Definições</h1>
+        <p>Altere as suas credenciais de acesso</p>
+      </div>
+      <div class="page-body">
+        <div class="settings-card">
+          <h3 class="settings-title">Alterar Credenciais</h3>
+          <p class="settings-sub">As alterações aplicam-se imediatamente.</p>
+
+          <div class="settings-form">
+            <div class="form-group">
+              <label class="form-label">Utilizador atual</label>
+              <input type="text" class="form-input" id="settingsCurrentUser" disabled>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Novo nome de utilizador</label>
+              <input type="text" class="form-input" id="settingsNewUser" placeholder="Deixe em branco para não alterar">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Nova password</label>
+              <input type="password" class="form-input" id="settingsNewPass" placeholder="Deixe em branco para não alterar">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Confirmar nova password</label>
+              <input type="password" class="form-input" id="settingsConfirmPass" placeholder="Repita a nova password">
+            </div>
+            <div id="settingsError" class="settings-error" style="display:none"></div>
+            <div id="settingsSuccess" class="settings-success" style="display:none">✓ Credenciais atualizadas com sucesso</div>
+            <button class="btn-primary" onclick="saveSettings()">Guardar Alterações</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div><!-- /content -->
 </div><!-- /app -->
 
@@ -209,6 +249,5 @@
 </div>
   <script src="js/supabase.js"></script>
   <script src="js/admin.js"></script>
-  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>
