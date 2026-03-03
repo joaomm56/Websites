@@ -3,7 +3,7 @@
    ============================================================ */
 
 const SVC          = { corte:'Corte & Styling', coloracao:'Coloração', tratamento:'Tratamentos', noiva:'Noiva', massagem:'Massagem', barba:'Barba' };
-const STL          = { ana:'Ana Menezes', joao:'João Menezes', '':'Sem preferência' };
+const STL          = { ana:'Ana Menezes', anderson:'Anderson Menezes', '':'Sem preferência' };
 const MONTHS_PT    = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
 const MONTHS_SHORT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 const DAYS_PT      = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
