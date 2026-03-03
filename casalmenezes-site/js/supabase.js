@@ -3,8 +3,8 @@
    Chamadas REST diretas ao Supabase (sem SDK)
    ============================================================ */
 
-const SUPABASE_URL = 'https://orhrywnagwkmcrbwwtaa.supabase.co';
-const SUPABASE_KEY = 'sb_publishable_CzddowHVhCS3T9KQaAPXdg_qyjp17MT';
+var SUPABASE_URL = 'https://orhrywnagwkmcrbwwtaa.supabase.co';
+var SUPABASE_KEY = 'sb_publishable_CzddowHVhCS3T9KQaAPXdg_qyjp17MT';
 
 const HEADERS = {
   'apikey': SUPABASE_KEY,
