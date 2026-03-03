@@ -12,41 +12,30 @@ const DAYS_PT      = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Q
 let BOOKINGS = [];
 let calYear, calMonth;
 
-// Map username → internal Supabase email
-const USER_MAP = {
-  ana:      'ana@casalmenezes.internal',
-  anderson: 'anderson@casalmenezes.internal'
-};
-
 async function doLogin() {
   const user = document.getElementById('loginUser').value.trim().toLowerCase();
   const pass = document.getElementById('loginPass').value;
+  const errEl = document.getElementById('loginError');
+  errEl.classList.remove('show');
 
-  const email = USER_MAP[user];
-  if (!email) {
-    document.getElementById('loginError').classList.add('show');
-    return;
-  }
+  if (!user || !pass) { errEl.classList.add('show'); return; }
 
   try {
-    const res = await fetch(`${SUPABASE_URL}/auth/v1/token?grant_type=password`, {
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/check_admin_login`, {
       method: 'POST',
       headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password: pass })
+      body: JSON.stringify({ p_username: user, p_password: pass })
     });
 
-    if (!res.ok) throw new Error('invalid');
-
-    const session = await res.json();
-    sessionStorage.setItem('admin_token', session.access_token);
-    sessionStorage.setItem('admin_user', user);
+    const ok = await res.json();
+    if (!ok) { errEl.classList.add('show'); return; }
 
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('app').classList.add('show');
     document.getElementById('sidebarUser').textContent = user.charAt(0).toUpperCase() + user.slice(1);
     initApp();
   } catch (err) {
-    document.getElementById('loginError').classList.add('show');
+    errEl.classList.add('show');
   }
 }
 function doLogout() {
