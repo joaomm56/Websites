@@ -3,13 +3,17 @@
    ============================================================ */
 
 const SERVICE_NAMES = { corte:'Corte & Styling', coloracao:'Coloração', tratamento:'Tratamentos Capilares', noiva:'Penteados Noiva', massagem:'Massagem Capilar', barba:'Barba & Bigode' };
-const STYLIST_NAMES = { ana:'Ana Menezes', anderson:'Anderson Menezes', '':'Sem preferência' };
+const STYLIST_NAMES = { ana:'Ana Menezes', joao:'João Menezes', '':'Sem preferência' };
 const MONTHS_SHORT  = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
 
 let cancelTargetId = null;
 
+function normalizePhone(phone) {
+  return phone.trim().replace(/\s+/g, '').replace(/^(\+351|00351)/, '');
+}
+
 async function searchBookings() {
-  const phone = document.getElementById('searchPhone').value.trim().replace(/\s|\+351/g, '');
+  const phone = normalizePhone(document.getElementById('searchPhone').value);
   const email = document.getElementById('searchEmail').value.trim().toLowerCase();
 
   if (!phone || !email) {

@@ -104,6 +104,10 @@ function clearSlots() {
   document.getElementById('selectedTime').value = '';
 }
 
+function normalizePhone(phone) {
+  return phone.trim().replace(/\s+/g, '').replace(/^(\+351|00351)/, '');
+}
+
 function validateForm() {
   const fname   = document.getElementById('fname').value.trim();
   const lname   = document.getElementById('lname').value.trim();
@@ -135,7 +139,7 @@ async function submitBooking() {
   const booking = {
     first_name: document.getElementById('fname').value.trim(),
     last_name:  document.getElementById('lname').value.trim(),
-    phone:      document.getElementById('phone').value.trim(),
+    phone:      normalizePhone(document.getElementById('phone').value),
     email:      document.getElementById('email').value.trim() || null,
     service:    document.getElementById('service').value,
     stylist:    document.getElementById('stylist').value || null,
