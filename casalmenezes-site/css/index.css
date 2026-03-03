@@ -1,0 +1,160 @@
+/* ============================================================
+   CASAL MENEZES HAIR SHOP — index.css
+   Estilos da página principal (hero, serviços, sobre, footer)
+   ============================================================ */
+
+/* ── HERO ────────────────────────────────────────────────── */
+.hero {
+  min-height: 100vh;
+  display: grid; grid-template-columns: 1fr 1fr;
+  padding-top: 80px; position: relative; overflow: hidden;
+}
+.hero-left {
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 80px 60px 80px 80px; position: relative; z-index: 2;
+}
+.hero-eyebrow {
+  font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 24px;
+  display: flex; align-items: center; gap: 12px;
+}
+.hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
+.hero-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(3.5rem, 5vw, 5.5rem);
+  font-weight: 300; line-height: 1.05; color: var(--dark); margin-bottom: 28px;
+}
+.hero-title em { font-style: italic; color: var(--gold); }
+.hero-sub {
+  font-size: 0.95rem; line-height: 1.8;
+  color: var(--warm-gray); max-width: 400px; margin-bottom: 48px; font-weight: 300;
+}
+.hero-actions { display: flex; gap: 16px; align-items: center; }
+
+.hero-right {
+  position: relative;
+  background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 40%, #6b3d22 100%);
+  overflow: hidden;
+}
+.hero-img-overlay {
+  position: absolute; inset: 0;
+  background: url('https://images.unsplash.com/photo-1560066984-138daab0b3a1?w=900&q=80') center/cover no-repeat;
+  opacity: 0.5; mix-blend-mode: luminosity;
+}
+.hero-pattern {
+  position: absolute; inset: 0;
+  background-image: repeating-linear-gradient(
+    45deg, transparent, transparent 30px,
+    rgba(201,169,110,0.05) 30px, rgba(201,169,110,0.05) 31px
+  );
+}
+.hero-badge {
+  position: absolute; bottom: 60px; right: 60px;
+  width: 120px; height: 120px;
+  border: 1px solid rgba(201,169,110,0.4); border-radius: 50%;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  color: var(--gold-light); text-align: center;
+  animation: rotateBadge 20s linear infinite;
+}
+.hero-badge-inner {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem; font-weight: 300; line-height: 1; color: var(--gold);
+}
+.hero-badge-text { font-size: 0.55rem; letter-spacing: 0.15em; text-transform: uppercase; margin-top: 4px; }
+@keyframes rotateBadge { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+
+/* ── STATS ───────────────────────────────────────────────── */
+.stats {
+  background: var(--dark);
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  border-top: 1px solid rgba(201,169,110,0.2);
+}
+.stat-item {
+  padding: 40px; text-align: center;
+  border-right: 1px solid rgba(201,169,110,0.15);
+}
+.stat-item:last-child { border-right: none; }
+.stat-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem; font-weight: 300; color: var(--gold); line-height: 1;
+}
+.stat-label {
+  font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(245,240,232,0.5); margin-top: 8px;
+}
+
+/* ── SERVIÇOS ────────────────────────────────────────────── */
+.services-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px; margin-top: 60px;
+  background: rgba(201,169,110,0.15);
+}
+.service-card {
+  background: var(--card-bg); padding: 50px 40px;
+  transition: all 0.4s; cursor: default; position: relative; overflow: hidden;
+}
+.service-card::before {
+  content: ''; position: absolute; bottom: 0; left: 0;
+  width: 0; height: 3px; background: var(--gold); transition: width 0.4s;
+}
+.service-card:hover::before { width: 100%; }
+.service-card:hover { background: white; transform: translateY(-4px); }
+.service-icon   { font-size: 2rem; margin-bottom: 20px; display: block; }
+.service-name   { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 400; margin-bottom: 12px; }
+.service-desc   { font-size: 0.85rem; color: var(--warm-gray); line-height: 1.7; margin-bottom: 24px; font-weight: 300; }
+.service-price  { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--gold); font-weight: 500; }
+
+/* ── SOBRE NÓS ───────────────────────────────────────────── */
+.about-section  { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.about-img-container { position: relative; height: 550px; }
+.about-img-main {
+  width: 80%; height: 100%; object-fit: cover; border-radius: 2px;
+}
+.about-img-accent {
+  position: absolute; right: 0; bottom: 60px;
+  width: 45%; height: 280px; object-fit: cover; border-radius: 2px;
+  border: 6px solid var(--cream); box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+}
+.about-gold-line { width: 60px; height: 2px; background: var(--gold); margin: 24px 0; }
+.about-text { font-size: 0.9rem; line-height: 1.9; color: var(--warm-gray); font-weight: 300; margin-bottom: 16px; }
+
+/* ── FOOTER ──────────────────────────────────────────────── */
+footer {
+  background: #0f0c09; color: rgba(245,240,232,0.5);
+  padding: 60px 80px;
+  display: grid; grid-template-columns: 2fr 1fr 1fr;
+  gap: 60px; border-top: 1px solid rgba(201,169,110,0.1);
+}
+.footer-brand .nav-logo { font-size: 1.6rem; color: var(--cream); }
+.footer-brand p {
+  font-size: 0.82rem; line-height: 1.8; margin-top: 16px;
+  color: rgba(245,240,232,0.4); max-width: 280px;
+}
+.footer-col h4 {
+  font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 20px;
+}
+.footer-col p, .footer-col a {
+  font-size: 0.82rem; line-height: 2;
+  color: rgba(245,240,232,0.5); text-decoration: none; display: block; transition: color 0.3s;
+}
+.footer-col a:hover { color: var(--gold); }
+.footer-bottom {
+  border-top: 1px solid rgba(201,169,110,0.1);
+  padding: 24px 80px; background: #0f0c09;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-bottom p { font-size: 0.75rem; color: rgba(245,240,232,0.3); }
+
+/* ── RESPONSIVO ──────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { height: 300px; }
+  .hero-left  { padding: 60px 24px; }
+  .services-grid { grid-template-columns: 1fr; }
+  .stats { grid-template-columns: 1fr; }
+  .about-section { grid-template-columns: 1fr; }
+  .about-img-container { height: 300px; }
+  footer { grid-template-columns: 1fr; padding: 40px 24px; gap: 32px; }
+  .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; }
+}

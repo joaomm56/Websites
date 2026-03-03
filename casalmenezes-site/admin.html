@@ -1,369 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel Admin – Casal Menezes Hair Shop</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --cream: #f5f0e8;
-    --dark: #1a1410;
-    --gold: #c9a96e;
-    --gold-light: #e2c99a;
-    --warm-gray: #6b6259;
-    --bg: #f0ebe0;
-    --sidebar: #14100d;
-    --green: #4a9e6b;
-    --orange: #c97c3a;
-    --red: #c94a4a;
-    --blue: #4a7ec9;
-  }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: 'Jost', sans-serif; background: var(--bg); color: var(--dark); min-height: 100vh; }
-
-  /* ── LOGIN ── */
-  .login-screen {
-    min-height: 100vh; display: flex; align-items: center; justify-content: center;
-    background: var(--dark);
-    background-image: repeating-linear-gradient(45deg, transparent, transparent 40px,
-      rgba(201,169,110,0.04) 40px, rgba(201,169,110,0.04) 41px);
-  }
-  .login-card {
-    background: rgba(245,240,232,0.04); border: 1px solid rgba(201,169,110,0.2);
-    border-radius: 6px; padding: 56px; width: 100%; max-width: 420px;
-    text-align: center;
-  }
-  .login-logo {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600;
-    color: var(--cream); margin-bottom: 6px;
-  }
-  .login-logo span { color: var(--gold); font-style: italic; }
-  .login-label {
-    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
-    color: rgba(245,240,232,0.3); margin-bottom: 40px;
-  }
-  .login-card h2 {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300;
-    color: var(--cream); margin-bottom: 32px;
-  }
-  .login-group { margin-bottom: 20px; text-align: left; }
-  .login-group label {
-    display: block; font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(245,240,232,0.4); margin-bottom: 10px;
-  }
-  .login-group input {
-    width: 100%; background: rgba(255,255,255,0.06); border: 1px solid rgba(201,169,110,0.2);
-    border-radius: 3px; padding: 14px 18px;
-    color: var(--cream); font-family: 'Jost', sans-serif; font-size: 0.9rem;
-    outline: none; transition: border-color 0.3s;
-  }
-  .login-group input:focus { border-color: var(--gold); }
-  .login-group input::placeholder { color: rgba(245,240,232,0.2); }
-  .btn-login {
-    width: 100%; background: var(--gold); color: var(--dark); border: none; cursor: pointer;
-    font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.22em;
-    text-transform: uppercase; padding: 16px; border-radius: 3px;
-    transition: background 0.3s; margin-top: 8px; font-weight: 500;
-  }
-  .btn-login:hover { background: var(--gold-light); }
-  .login-error {
-    color: #e07070; font-size: 0.8rem; margin-top: 16px;
-    display: none; text-align: center;
-  }
-  .login-error.show { display: block; }
-
-  /* ── APP SHELL ── */
-  .app { display: none; min-height: 100vh; }
-  .app.show { display: grid; grid-template-columns: 240px 1fr; }
-
-  /* SIDEBAR */
-  .sidebar {
-    background: var(--sidebar); min-height: 100vh;
-    display: flex; flex-direction: column;
-    position: sticky; top: 0; height: 100vh;
-  }
-  .sidebar-brand {
-    padding: 28px 24px; border-bottom: 1px solid rgba(201,169,110,0.1);
-  }
-  .sidebar-brand .logo {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; font-weight: 600;
-    color: var(--cream);
-  }
-  .sidebar-brand .logo span { color: var(--gold); font-style: italic; }
-  .sidebar-brand small {
-    display: block; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(245,240,232,0.3); margin-top: 4px;
-  }
-  .sidebar-nav { flex: 1; padding: 24px 0; }
-  .nav-section {
-    font-size: 0.55rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: rgba(245,240,232,0.25); padding: 0 24px 10px;
-  }
-  .sidebar-link {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 24px; cursor: pointer; transition: all 0.2s;
-    color: rgba(245,240,232,0.5); font-size: 0.85rem; font-weight: 300;
-    border-left: 2px solid transparent;
-    user-select: none;
-  }
-  .sidebar-link:hover { color: var(--cream); background: rgba(255,255,255,0.04); }
-  .sidebar-link.active { color: var(--gold); border-left-color: var(--gold); background: rgba(201,169,110,0.07); }
-  .sidebar-link .icon { font-size: 1rem; width: 20px; text-align: center; }
-  .sidebar-footer {
-    padding: 20px 24px; border-top: 1px solid rgba(201,169,110,0.1);
-  }
-  .sidebar-user { font-size: 0.78rem; color: rgba(245,240,232,0.4); margin-bottom: 12px; }
-  .btn-logout {
-    font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase;
-    color: rgba(245,240,232,0.3); cursor: pointer;
-    background: none; border: 1px solid rgba(255,255,255,0.1);
-    padding: 8px 16px; border-radius: 3px; font-family: 'Jost', sans-serif;
-    transition: all 0.3s; width: 100%;
-  }
-  .btn-logout:hover { border-color: var(--red); color: #e07070; }
-
-  /* MAIN CONTENT */
-  .content { padding: 40px 48px; overflow-y: auto; }
-  .page { display: none; }
-  .page.active { display: block; }
-
-  /* PAGE HEADER */
-  .page-hdr {
-    display: flex; justify-content: space-between; align-items: flex-start;
-    margin-bottom: 36px;
-  }
-  .page-hdr h1 {
-    font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 300;
-  }
-  .page-hdr h1 em { font-style: italic; color: var(--gold); }
-  .page-hdr p { font-size: 0.82rem; color: var(--warm-gray); margin-top: 4px; font-weight: 300; }
-
-  /* KPI CARDS */
-  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
-  .kpi-card {
-    background: white; border-radius: 6px; padding: 28px 24px;
-    border: 1px solid rgba(0,0,0,0.06);
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-  .kpi-label { font-size: 0.62rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--warm-gray); margin-bottom: 12px; }
-  .kpi-value { font-family: 'Cormorant Garamond', serif; font-size: 2.8rem; font-weight: 300; line-height: 1; }
-  .kpi-sub { font-size: 0.72rem; color: var(--warm-gray); margin-top: 6px; }
-  .kpi-gold .kpi-value { color: var(--gold); }
-  .kpi-green .kpi-value { color: var(--green); }
-  .kpi-orange .kpi-value { color: var(--orange); }
-
-  /* FILTERS */
-  .filters {
-    display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; align-items: center;
-  }
-  .filter-input {
-    background: white; border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 3px; padding: 10px 14px;
-    font-family: 'Jost', sans-serif; font-size: 0.82rem;
-    outline: none; color: var(--dark); transition: border-color 0.3s;
-  }
-  .filter-input:focus { border-color: var(--gold); }
-  .filter-input::placeholder { color: #aaa; }
-  .filter-select {
-    background: white; border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 3px; padding: 10px 14px;
-    font-family: 'Jost', sans-serif; font-size: 0.82rem;
-    outline: none; color: var(--dark); cursor: pointer;
-    -webkit-appearance: none; transition: border-color 0.3s;
-  }
-  .filter-select:focus { border-color: var(--gold); }
-
-  /* TABLE */
-  .table-container {
-    background: white; border-radius: 6px;
-    border: 1px solid rgba(0,0,0,0.07);
-    overflow: hidden;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-  table { width: 100%; border-collapse: collapse; }
-  thead { background: var(--dark); }
-  thead th {
-    padding: 16px 20px; text-align: left;
-    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(245,240,232,0.5); font-weight: 400;
-  }
-  tbody tr { border-bottom: 1px solid rgba(0,0,0,0.05); transition: background 0.15s; }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: rgba(201,169,110,0.04); }
-  td { padding: 16px 20px; font-size: 0.84rem; vertical-align: middle; }
-  .td-name { font-weight: 500; }
-  .td-muted { color: var(--warm-gray); font-size: 0.78rem; font-weight: 300; }
-  .td-service {
-    background: rgba(201,169,110,0.1); color: #7a5c2a;
-    padding: 4px 10px; border-radius: 20px; font-size: 0.72rem;
-    display: inline-block; letter-spacing: 0.05em; white-space: nowrap;
-  }
-
-  /* STATUS BADGE */
-  .badge {
-    display: inline-flex; align-items: center; gap: 5px;
-    padding: 5px 12px; border-radius: 20px;
-    font-size: 0.68rem; font-weight: 500; letter-spacing: 0.05em; white-space: nowrap;
-  }
-  .badge::before { content: ''; width: 5px; height: 5px; border-radius: 50%; }
-  .badge-pending { background: rgba(201,124,58,0.12); color: #8a4e1a; }
-  .badge-pending::before { background: var(--orange); }
-  .badge-confirmed { background: rgba(74,158,107,0.12); color: #1e5c3a; }
-  .badge-confirmed::before { background: var(--green); }
-  .badge-cancelled { background: rgba(201,74,74,0.1); color: #7a1a1a; }
-  .badge-cancelled::before { background: var(--red); }
-
-  /* ACTION BUTTONS */
-  .action-btns { display: flex; gap: 6px; }
-  .btn-action {
-    padding: 6px 12px; border-radius: 3px; cursor: pointer;
-    font-family: 'Jost', sans-serif; font-size: 0.68rem;
-    letter-spacing: 0.1em; text-transform: uppercase; border: 1px solid;
-    transition: all 0.2s; font-weight: 400;
-  }
-  .btn-confirm { border-color: rgba(74,158,107,0.4); color: var(--green); background: transparent; }
-  .btn-confirm:hover { background: var(--green); color: white; }
-  .btn-cancel-row { border-color: rgba(201,74,74,0.4); color: var(--red); background: transparent; }
-  .btn-cancel-row:hover { background: var(--red); color: white; }
-  .btn-action:disabled { opacity: 0.25; cursor: not-allowed; }
-
-  /* EMPTY TABLE */
-  .table-empty {
-    text-align: center; padding: 60px 20px;
-    color: var(--warm-gray); font-size: 0.9rem;
-  }
-  .table-empty .big { font-size: 2.5rem; margin-bottom: 12px; }
-
-  /* CALENDAR PAGE */
-  .cal-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 24px;
-  }
-  .cal-title {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.8rem; font-weight: 300;
-  }
-  .cal-nav { display: flex; gap: 8px; }
-  .btn-cal-nav {
-    background: white; border: 1px solid rgba(0,0,0,0.1);
-    border-radius: 3px; padding: 8px 16px; cursor: pointer;
-    font-family: 'Jost', sans-serif; font-size: 0.8rem;
-    transition: all 0.2s;
-  }
-  .btn-cal-nav:hover { background: var(--dark); color: white; border-color: var(--dark); }
-  .calendar-grid {
-    background: white; border-radius: 6px; border: 1px solid rgba(0,0,0,0.07);
-    overflow: hidden; box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-  .cal-weekdays {
-    display: grid; grid-template-columns: repeat(7, 1fr);
-    background: var(--dark);
-  }
-  .cal-weekday {
-    padding: 14px; text-align: center;
-    font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(245,240,232,0.4);
-  }
-  .cal-days { display: grid; grid-template-columns: repeat(7, 1fr); }
-  .cal-day {
-    min-height: 90px; padding: 10px;
-    border-right: 1px solid rgba(0,0,0,0.05);
-    border-bottom: 1px solid rgba(0,0,0,0.05);
-  }
-  .cal-day.other-month { background: rgba(0,0,0,0.015); }
-  .cal-day-num {
-    font-size: 0.8rem; color: var(--warm-gray); margin-bottom: 6px; font-weight: 400;
-  }
-  .cal-day.today .cal-day-num {
-    background: var(--gold); color: var(--dark); border-radius: 50%;
-    width: 24px; height: 24px; display: flex; align-items: center; justify-content: center;
-    font-weight: 500;
-  }
-  .cal-event {
-    background: rgba(201,169,110,0.15); border-left: 2px solid var(--gold);
-    border-radius: 2px; padding: 3px 6px; margin-bottom: 3px;
-    font-size: 0.68rem; color: #7a5c2a; cursor: pointer;
-    transition: background 0.2s; white-space: nowrap; overflow: hidden;
-  }
-  .cal-event.confirmed { background: rgba(74,158,107,0.12); border-left-color: var(--green); color: #2d6e4a; }
-  .cal-event.cancelled { background: rgba(201,74,74,0.08); border-left-color: var(--red); color: #8a2020; opacity: 0.6; }
-
-  /* DETAIL DRAWER */
-  .drawer-overlay {
-    position: fixed; inset: 0; z-index: 200;
-    background: rgba(26,20,16,0.6);
-    opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  }
-  .drawer-overlay.open { opacity: 1; pointer-events: all; }
-  .drawer {
-    position: fixed; right: 0; top: 0; bottom: 0; z-index: 201;
-    width: 400px; background: white;
-    padding: 40px 36px;
-    transform: translateX(440px); transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
-    overflow-y: auto;
-    box-shadow: -20px 0 60px rgba(0,0,0,0.12);
-  }
-  .drawer-overlay.open .drawer { transform: translateX(0); }
-  .drawer-close {
-    position: absolute; top: 20px; right: 20px;
-    background: none; border: none; cursor: pointer; font-size: 1.2rem;
-    color: var(--warm-gray); padding: 8px;
-  }
-  .drawer h2 {
-    font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 300;
-    margin-bottom: 4px;
-  }
-  .drawer-section { margin-top: 28px; }
-  .drawer-section h4 {
-    font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--warm-gray); margin-bottom: 12px;
-    padding-bottom: 8px; border-bottom: 1px solid rgba(0,0,0,0.07);
-  }
-  .drawer-row {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 10px 0; border-bottom: 1px solid rgba(0,0,0,0.04); font-size: 0.85rem;
-  }
-  .drawer-row .lbl { color: var(--warm-gray); font-weight: 300; }
-  .drawer-actions { margin-top: 32px; display: flex; flex-direction: column; gap: 10px; }
-  .btn-drawer-confirm {
-    background: var(--green); color: white; border: none; cursor: pointer;
-    font-family: 'Jost', sans-serif; font-size: 0.75rem; letter-spacing: 0.2em;
-    text-transform: uppercase; padding: 14px; border-radius: 3px; transition: opacity 0.3s;
-  }
-  .btn-drawer-confirm:hover { opacity: 0.85; }
-  .btn-drawer-cancel {
-    background: transparent; color: var(--red); border: 1px solid rgba(201,74,74,0.4);
-    cursor: pointer; font-family: 'Jost', sans-serif; font-size: 0.75rem;
-    letter-spacing: 0.2em; text-transform: uppercase; padding: 14px; border-radius: 3px;
-    transition: all 0.3s;
-  }
-  .btn-drawer-cancel:hover { background: var(--red); color: white; }
-  .btn-drawer-confirm:disabled, .btn-drawer-cancel:disabled { opacity: 0.3; cursor: not-allowed; }
-
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: 32px; right: 32px; z-index: 999;
-    background: var(--dark); border: 1px solid var(--gold);
-    border-radius: 4px; padding: 16px 24px; min-width: 280px;
-    transform: translateY(100px); opacity: 0;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  .toast.show { transform: translateY(0); opacity: 1; }
-  .toast-title { font-family: 'Cormorant Garamond', serif; font-size: 1.1rem; color: var(--gold); margin-bottom: 4px; }
-  .toast-msg { font-size: 0.78rem; color: rgba(245,240,232,0.6); }
-
-  @media (max-width: 1000px) {
-    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
-    .app { grid-template-columns: 1fr; }
-    .sidebar { display: none; }
-    .content { padding: 24px 20px; }
-    .drawer { width: 100%; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Admin – Casal Menezes Hair Shop</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/admin.css">
 </head>
 <body>
 
-<!-- LOGIN SCREEN -->
+<!-- ── LOGIN ──────────────────────────────────────────────── -->
 <div class="login-screen" id="loginScreen">
   <div class="login-card">
     <div class="login-logo">Casal Menezes <span>Hair Shop</span></div>
@@ -375,16 +21,17 @@
     </div>
     <div class="login-group">
       <label>Palavra-passe</label>
-      <input type="password" id="loginPass" placeholder="••••••••" value="admin">
+      <input type="password" id="loginPass" placeholder="••••••••">
     </div>
     <div class="login-error" id="loginError">Credenciais incorretas. Tente novamente.</div>
     <button class="btn-login" onclick="doLogin()">Entrar</button>
   </div>
 </div>
 
-<!-- APP -->
+<!-- ── APP ────────────────────────────────────────────────── -->
 <div class="app" id="app">
-  <!-- SIDEBAR -->
+
+  <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-brand">
       <div class="logo">Casal Menezes <span>Hair Shop</span></div>
@@ -401,8 +48,8 @@
       <div class="sidebar-link" onclick="showPage('calendar')">
         <span class="icon">🗓️</span> Calendário
       </div>
-      <div class="nav-section" style="margin-top:20px;">Definições</div>
-      <div class="sidebar-link" onclick="window.location='casal-menezes.html'" style="margin-top:4px;">
+      <div class="nav-section" style="margin-top:20px">Definições</div>
+      <div class="sidebar-link" onclick="window.location='index.html'">
         <span class="icon">🌐</span> Ver Site
       </div>
     </nav>
@@ -412,15 +59,15 @@
     </div>
   </aside>
 
-  <!-- CONTENT -->
+  <!-- Conteúdo -->
   <div class="content">
 
-    <!-- DASHBOARD PAGE -->
+    <!-- ── DASHBOARD ──────────────────────────────────────── -->
     <div class="page active" id="page-dashboard">
       <div class="page-hdr">
         <div>
           <h1>Bom dia, <em>Casal Menezes</em></h1>
-          <p id="todayDate">Carregando...</p>
+          <p id="todayDate"></p>
         </div>
       </div>
       <div class="kpi-grid">
@@ -440,22 +87,18 @@
           <div class="kpi-sub">marcações confirmadas</div>
         </div>
         <div class="kpi-card">
-          <div class="kpi-label">Total Clientes</div>
+          <div class="kpi-label">Total</div>
           <div class="kpi-value" id="kpiTotal">—</div>
           <div class="kpi-sub">marcações no total</div>
         </div>
       </div>
-
-      <!-- Today's bookings -->
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:16px;">
+      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:16px">
         Marcações de Hoje
       </h3>
-      <div class="table-container" id="todayTable">
-        <div class="table-empty"><div class="big">🌅</div>Sem marcações para hoje</div>
-      </div>
+      <div class="table-container" id="todayTable"></div>
     </div>
 
-    <!-- BOOKINGS PAGE -->
+    <!-- ── MARCAÇÕES ───────────────────────────────────────── -->
     <div class="page" id="page-bookings">
       <div class="page-hdr">
         <div>
@@ -464,7 +107,9 @@
         </div>
       </div>
       <div class="filters">
-        <input class="filter-input" type="text" id="filterSearch" placeholder="🔍  Pesquisar nome ou telemóvel..." style="flex:1;min-width:220px;" oninput="renderBookingsTable()">
+        <input class="filter-input" type="text" id="filterSearch"
+               placeholder="🔍  Pesquisar nome ou telemóvel..."
+               style="flex:1;min-width:220px" oninput="renderBookingsTable()">
         <select class="filter-select" id="filterStatus" onchange="renderBookingsTable()">
           <option value="">Todos os estados</option>
           <option value="pending">Pendente</option>
@@ -473,7 +118,7 @@
         </select>
         <select class="filter-select" id="filterService" onchange="renderBookingsTable()">
           <option value="">Todos os serviços</option>
-          <option value="corte">Corte & Styling</option>
+          <option value="corte">Corte &amp; Styling</option>
           <option value="coloracao">Coloração</option>
           <option value="tratamento">Tratamentos</option>
           <option value="noiva">Noiva</option>
@@ -487,7 +132,7 @@
             <tr>
               <th>Cliente</th>
               <th>Serviço</th>
-              <th>Data & Hora</th>
+              <th>Data &amp; Hora</th>
               <th>Profissional</th>
               <th>Estado</th>
               <th>Ações</th>
@@ -498,7 +143,7 @@
       </div>
     </div>
 
-    <!-- CALENDAR PAGE -->
+    <!-- ── CALENDÁRIO ──────────────────────────────────────── -->
     <div class="page" id="page-calendar">
       <div class="page-hdr">
         <div>
@@ -530,7 +175,7 @@
   </div><!-- /content -->
 </div><!-- /app -->
 
-<!-- DETAIL DRAWER -->
+<!-- ── DRAWER DE DETALHE ───────────────────────────────────── -->
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer(event)">
   <div class="drawer" id="drawer">
     <button class="drawer-close" onclick="closeDrawer()">✕</button>
@@ -538,239 +183,12 @@
   </div>
 </div>
 
+<!-- ── TOAST ───────────────────────────────────────────────── -->
 <div class="toast" id="toast">
   <div class="toast-title" id="toastTitle"></div>
-  <div class="toast-msg" id="toastMsg"></div>
+  <div class="toast-msg"   id="toastMsg"></div>
 </div>
 
-<script>
-// ─── MOCK DATA ────────────────────────────────────────────────────────────
-// TODO: Replace with supabase.from('bookings').select('*') calls
-let BOOKINGS = [
-  { id:'b001', first_name:'Maria', last_name:'Silva', phone:'912345678', email:'maria@exemplo.com', service:'coloracao', stylist:'ana', date:'2025-08-18', time:'10:00', status:'confirmed', notes:'Quer mechas loiras' },
-  { id:'b002', first_name:'Maria', last_name:'Silva', phone:'912345678', email:'maria@exemplo.com', service:'corte', stylist:'joao', date:'2025-08-20', time:'14:30', status:'pending', notes:'Corte curto, acima dos ombros' },
-  { id:'b003', first_name:'João', last_name:'Costa', phone:'965432100', email:'', service:'barba', stylist:'joao', date:'2025-08-14', time:'11:00', status:'cancelled', notes:'' },
-  { id:'b004', first_name:'Ana', last_name:'Pereira', phone:'933001122', email:'ana.p@email.com', service:'tratamento', stylist:'ana', date:'2025-08-18', time:'15:00', status:'pending', notes:'' },
-  { id:'b005', first_name:'Carlos', last_name:'Ferreira', phone:'961223344', email:'', service:'corte', stylist:'joao', date:'2025-08-19', time:'09:30', status:'confirmed', notes:'Franja curta' },
-  { id:'b006', first_name:'Sofia', last_name:'Rodrigues', phone:'912998877', email:'sofia@email.com', service:'noiva', stylist:'ana', date:'2025-09-05', time:'10:00', status:'confirmed', notes:'Casamento dia 6 set' },
-];
-
-const SVC = { corte:'Corte & Styling', coloracao:'Coloração', tratamento:'Tratamentos', noiva:'Noiva', massagem:'Massagem', barba:'Barba' };
-const STL = { ana:'Ana Menezes', joao:'João Menezes', '':'Sem preferência' };
-const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
-const MONTHS_SHORT = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-const DAYS_PT = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
-
-let calYear, calMonth;
-
-// ─── LOGIN ─────────────────────────────────────────────────────────────────
-const CREDENTIALS = { admin: 'menezes2025' }; // Change in production; use Supabase Auth
-
-function doLogin() {
-  const user = document.getElementById('loginUser').value.trim();
-  const pass = document.getElementById('loginPass').value;
-  if (CREDENTIALS[user] && CREDENTIALS[user] === pass) {
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').classList.add('show');
-    initApp();
-  } else {
-    document.getElementById('loginError').classList.add('show');
-  }
-}
-document.getElementById('loginPass').addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
-
-function doLogout() {
-  document.getElementById('app').classList.remove('show');
-  document.getElementById('loginScreen').style.display = 'flex';
-  document.getElementById('loginPass').value = '';
-}
-
-// ─── INIT ──────────────────────────────────────────────────────────────────
-function initApp() {
-  const now = new Date();
-  const dayNames = ['Domingo','Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado'];
-  document.getElementById('todayDate').textContent =
-    `${dayNames[now.getDay()]}, ${now.getDate()} de ${MONTHS_PT[now.getMonth()]} de ${now.getFullYear()}`;
-
-  updateKPIs();
-  renderTodayTable();
-  renderBookingsTable();
-  calYear = now.getFullYear(); calMonth = now.getMonth();
-  renderCalendar();
-}
-
-// ─── KPIs ──────────────────────────────────────────────────────────────────
-function updateKPIs() {
-  const today = new Date().toISOString().split('T')[0];
-  const todayBookings = BOOKINGS.filter(b => b.date === today && b.status !== 'cancelled');
-  const pending = BOOKINGS.filter(b => b.status === 'pending');
-  const now = new Date();
-  const weekStart = new Date(now); weekStart.setDate(now.getDate() - now.getDay());
-  const weekEnd = new Date(weekStart); weekEnd.setDate(weekStart.getDate() + 6);
-  const weekConfirmed = BOOKINGS.filter(b => {
-    const d = new Date(b.date); return d >= weekStart && d <= weekEnd && b.status === 'confirmed';
-  });
-  document.getElementById('kpiToday').textContent = todayBookings.length;
-  document.getElementById('kpiPending').textContent = pending.length;
-  document.getElementById('kpiWeek').textContent = weekConfirmed.length;
-  document.getElementById('kpiTotal').textContent = BOOKINGS.length;
-}
-
-// ─── TODAY TABLE ───────────────────────────────────────────────────────────
-function renderTodayTable() {
-  const today = new Date().toISOString().split('T')[0];
-  // For demo, use most recent date with bookings if no bookings today
-  const todayB = BOOKINGS.filter(b => b.date === today && b.status !== 'cancelled');
-  const displayB = todayB.length ? todayB : BOOKINGS.filter(b => b.status !== 'cancelled').slice(0,3);
-  const el = document.getElementById('todayTable');
-  if (!displayB.length) { el.innerHTML = `<div class="table-empty"><div class="big">🌅</div>Sem marcações para hoje</div>`; return; }
-  el.innerHTML = `<table><thead><tr>
-    <th>Cliente</th><th>Serviço</th><th>Hora</th><th>Profissional</th><th>Estado</th>
-  </tr></thead><tbody>
-    ${displayB.sort((a,b)=>a.time.localeCompare(b.time)).map(b=>`
-    <tr onclick="openDrawer('${b.id}')" style="cursor:pointer">
-      <td><div class="td-name">${b.first_name} ${b.last_name}</div><div class="td-muted">${b.phone}</div></td>
-      <td><span class="td-service">${SVC[b.service]||b.service}</span></td>
-      <td>${b.time}</td>
-      <td>${STL[b.stylist]||b.stylist}</td>
-      <td><span class="badge badge-${b.status}">${{pending:'Pendente',confirmed:'Confirmado',cancelled:'Cancelado'}[b.status]}</span></td>
-    </tr>`).join('')}
-  </tbody></table>`;
-}
-
-// ─── BOOKINGS TABLE ────────────────────────────────────────────────────────
-function renderBookingsTable() {
-  const search = document.getElementById('filterSearch').value.toLowerCase();
-  const status = document.getElementById('filterStatus').value;
-  const service = document.getElementById('filterService').value;
-  let filtered = BOOKINGS.filter(b => {
-    const name = `${b.first_name} ${b.last_name} ${b.phone}`.toLowerCase();
-    return (!search || name.includes(search))
-        && (!status || b.status === status)
-        && (!service || b.service === service);
-  }).sort((a,b) => b.date.localeCompare(a.date) || a.time.localeCompare(b.time));
-
-  const tbody = document.getElementById('bookingsTableBody');
-  if (!filtered.length) {
-    tbody.innerHTML = `<tr><td colspan="6"><div class="table-empty"><div class="big">🔍</div>Sem resultados</div></td></tr>`;
-    return;
-  }
-  tbody.innerHTML = filtered.map(b => {
-    const d = new Date(b.date+'T12:00');
-    const isPast = d < new Date();
-    const canAct = b.status !== 'cancelled' && !isPast;
-    return `<tr onclick="openDrawer('${b.id}')" style="cursor:pointer">
-      <td><div class="td-name">${b.first_name} ${b.last_name}</div><div class="td-muted">${b.phone}${b.email?` · ${b.email}`:''}</div></td>
-      <td><span class="td-service">${SVC[b.service]||b.service}</span></td>
-      <td><div class="td-name">${d.getDate()} ${MONTHS_SHORT[d.getMonth()]} ${d.getFullYear()}</div><div class="td-muted">${b.time}</div></td>
-      <td>${STL[b.stylist]||b.stylist}</td>
-      <td><span class="badge badge-${b.status}">${{pending:'Pendente',confirmed:'Confirmado',cancelled:'Cancelado'}[b.status]}</span></td>
-      <td onclick="event.stopPropagation()">
-        <div class="action-btns">
-          ${canAct && b.status!=='confirmed' ? `<button class="btn-action btn-confirm" onclick="changeStatus('${b.id}','confirmed')">✓ Confirmar</button>` : ''}
-          ${canAct ? `<button class="btn-action btn-cancel-row" onclick="changeStatus('${b.id}','cancelled')">✕</button>` : ''}
-        </div>
-      </td>
-    </tr>`;
-  }).join('');
-}
-
-// ─── CHANGE STATUS ─────────────────────────────────────────────────────────
-function changeStatus(id, newStatus) {
-  // TODO: await supabase.from('bookings').update({ status: newStatus }).eq('id', id)
-  const b = BOOKINGS.find(x => x.id === id);
-  if (!b) return;
-  b.status = newStatus;
-  updateKPIs(); renderTodayTable(); renderBookingsTable();
-  const msgs = { confirmed:'Marcação confirmada com sucesso!', cancelled:'Marcação cancelada.' };
-  showToast(msgs[newStatus] || 'Atualizado', `${b.first_name} ${b.last_name} - ${b.time}`);
-  if (document.getElementById('drawerOverlay').classList.contains('open')) openDrawer(id);
-}
-
-// ─── DRAWER ────────────────────────────────────────────────────────────────
-function openDrawer(id) {
-  const b = BOOKINGS.find(x => x.id === id);
-  if (!b) return;
-  const d = new Date(b.date+'T12:00');
-  const isPast = d < new Date();
-  const canAct = b.status !== 'cancelled' && !isPast;
-  document.getElementById('drawerContent').innerHTML = `
-    <h2>${b.first_name} ${b.last_name}</h2>
-    <span class="badge badge-${b.status}" style="margin-top:8px;display:inline-flex">${{pending:'Pendente',confirmed:'Confirmado',cancelled:'Cancelado'}[b.status]}</span>
-    <div class="drawer-section">
-      <h4>Detalhes do Serviço</h4>
-      <div class="drawer-row"><span class="lbl">Serviço</span><span>${SVC[b.service]||b.service}</span></div>
-      <div class="drawer-row"><span class="lbl">Data</span><span>${d.getDate()} de ${MONTHS_PT[d.getMonth()]} de ${d.getFullYear()}</span></div>
-      <div class="drawer-row"><span class="lbl">Hora</span><span>${b.time}</span></div>
-      <div class="drawer-row"><span class="lbl">Profissional</span><span>${STL[b.stylist]||b.stylist}</span></div>
-    </div>
-    <div class="drawer-section">
-      <h4>Contacto do Cliente</h4>
-      <div class="drawer-row"><span class="lbl">Telemóvel</span><span>${b.phone}</span></div>
-      ${b.email ? `<div class="drawer-row"><span class="lbl">Email</span><span>${b.email}</span></div>` : ''}
-    </div>
-    ${b.notes ? `<div class="drawer-section"><h4>Observações</h4><p style="font-size:.85rem;color:var(--warm-gray);line-height:1.6;font-weight:300">${b.notes}</p></div>` : ''}
-    <div class="drawer-actions">
-      ${canAct && b.status!=='confirmed' ? `<button class="btn-drawer-confirm" onclick="changeStatus('${b.id}','confirmed')">✓ Confirmar Marcação</button>` : ''}
-      ${canAct ? `<button class="btn-drawer-cancel" onclick="changeStatus('${b.id}','cancelled')">✕ Cancelar Marcação</button>` : ''}
-    </div>`;
-  document.getElementById('drawerOverlay').classList.add('open');
-}
-function closeDrawer(e) {
-  if (e && e.target !== document.getElementById('drawerOverlay')) return;
-  document.getElementById('drawerOverlay').classList.remove('open');
-}
-
-// ─── CALENDAR ──────────────────────────────────────────────────────────────
-function renderCalendar() {
-  document.getElementById('calTitle').textContent = `${MONTHS_PT[calMonth]} ${calYear}`;
-  const firstDay = new Date(calYear, calMonth, 1).getDay();
-  const daysInMonth = new Date(calYear, calMonth+1, 0).getDate();
-  const daysInPrev = new Date(calYear, calMonth, 0).getDate();
-  const today = new Date().toISOString().split('T')[0];
-  let html = '';
-  let totalCells = Math.ceil((firstDay + daysInMonth) / 7) * 7;
-  for (let i = 0; i < totalCells; i++) {
-    let dayNum, thisMonth = true, dateStr;
-    if (i < firstDay) { dayNum = daysInPrev - firstDay + i + 1; thisMonth = false; }
-    else if (i >= firstDay + daysInMonth) { dayNum = i - firstDay - daysInMonth + 1; thisMonth = false; }
-    else { dayNum = i - firstDay + 1; }
-    if (thisMonth) {
-      const m = String(calMonth+1).padStart(2,'0');
-      const d = String(dayNum).padStart(2,'0');
-      dateStr = `${calYear}-${m}-${d}`;
-    }
-    const isToday = dateStr === today;
-    const dayBookings = dateStr ? BOOKINGS.filter(b => b.date === dateStr) : [];
-    html += `<div class="cal-day${!thisMonth?' other-month':''}${isToday?' today':''}">
-      <div class="cal-day-num">${dayNum}</div>
-      ${dayBookings.slice(0,3).map(b => `
-        <div class="cal-event ${b.status}" onclick="openDrawer('${b.id}')" title="${b.first_name} ${b.last_name}">
-          ${b.time} ${b.first_name}
-        </div>`).join('')}
-      ${dayBookings.length > 3 ? `<div class="cal-event" style="background:rgba(0,0,0,0.06);color:#888">+${dayBookings.length-3} mais</div>` : ''}
-    </div>`;
-  }
-  document.getElementById('calDays').innerHTML = html;
-}
-function changeMonth(dir) { calMonth += dir; if(calMonth>11){calMonth=0;calYear++;}else if(calMonth<0){calMonth=11;calYear--;} renderCalendar(); }
-
-// ─── NAV ───────────────────────────────────────────────────────────────────
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
-  document.getElementById('page-'+name).classList.add('active');
-  event.currentTarget.classList.add('active');
-}
-
-// ─── TOAST ─────────────────────────────────────────────────────────────────
-function showToast(title, msg) {
-  const t = document.getElementById('toast');
-  document.getElementById('toastTitle').textContent = title;
-  document.getElementById('toastMsg').textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 4000);
-}
-</script>
+<script src="js/admin.js"></script>
 </body>
 </html>

@@ -1,507 +1,16 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Casal Menezes Hair Shop – Portimão</title>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-  :root {
-    --cream: #f5f0e8;
-    --dark: #1a1410;
-    --gold: #c9a96e;
-    --gold-light: #e2c99a;
-    --terracotta: #b85c38;
-    --warm-gray: #6b6259;
-    --card-bg: #faf7f2;
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    font-family: 'Jost', sans-serif;
-    background: var(--cream);
-    color: var(--dark);
-    overflow-x: hidden;
-  }
-
-  /* NAV */
-  nav {
-    position: fixed; top: 0; width: 100%; z-index: 100;
-    padding: 20px 60px;
-    display: flex; justify-content: space-between; align-items: center;
-    background: rgba(245,240,232,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(201,169,110,0.2);
-    transition: all 0.3s;
-  }
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem; font-weight: 600;
-    letter-spacing: 0.05em;
-    color: var(--dark);
-  }
-  .nav-logo span { color: var(--gold); font-style: italic; }
-  .nav-links { display: flex; gap: 36px; list-style: none; }
-  .nav-links a {
-    text-decoration: none; color: var(--warm-gray);
-    font-size: 0.8rem; letter-spacing: 0.12em; text-transform: uppercase;
-    font-weight: 400;
-    transition: color 0.3s;
-    position: relative;
-  }
-  .nav-links a::after {
-    content: ''; position: absolute; bottom: -4px; left: 0;
-    width: 0; height: 1px; background: var(--gold);
-    transition: width 0.3s;
-  }
-  .nav-links a:hover { color: var(--dark); }
-  .nav-links a:hover::after { width: 100%; }
-  .nav-book {
-    background: var(--dark); color: var(--cream) !important;
-    padding: 10px 24px;
-    font-size: 0.75rem !important;
-    letter-spacing: 0.15em !important;
-    border-radius: 2px;
-  }
-  .nav-book::after { display: none !important; }
-  .nav-book:hover { background: var(--gold); color: var(--dark) !important; }
-
-  /* HERO */
-  .hero {
-    min-height: 100vh;
-    display: grid; grid-template-columns: 1fr 1fr;
-    padding-top: 80px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero-left {
-    display: flex; flex-direction: column; justify-content: center;
-    padding: 80px 60px 80px 80px;
-    position: relative; z-index: 2;
-  }
-  .hero-eyebrow {
-    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 24px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .hero-eyebrow::before { content: ''; width: 40px; height: 1px; background: var(--gold); }
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(3.5rem, 5vw, 5.5rem);
-    font-weight: 300; line-height: 1.05;
-    color: var(--dark); margin-bottom: 28px;
-  }
-  .hero-title em { font-style: italic; color: var(--gold); }
-  .hero-sub {
-    font-size: 0.95rem; line-height: 1.8;
-    color: var(--warm-gray); max-width: 400px; margin-bottom: 48px;
-    font-weight: 300;
-  }
-  .hero-actions { display: flex; gap: 16px; align-items: center; }
-  .btn-primary {
-    background: var(--dark); color: var(--cream);
-    padding: 16px 40px; border: none; cursor: pointer;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-    border-radius: 2px; transition: all 0.3s; text-decoration: none;
-    display: inline-block;
-  }
-  .btn-primary:hover { background: var(--gold); color: var(--dark); }
-  .btn-outline {
-    background: transparent; color: var(--dark);
-    padding: 16px 40px; border: 1px solid var(--dark); cursor: pointer;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
-    border-radius: 2px; transition: all 0.3s; text-decoration: none;
-    display: inline-block;
-  }
-  .btn-outline:hover { background: var(--dark); color: var(--cream); }
-
-  .hero-right {
-    position: relative;
-    background: linear-gradient(135deg, #2c1810 0%, #4a2c1a 40%, #6b3d22 100%);
-    overflow: hidden;
-  }
-  .hero-img-overlay {
-    position: absolute; inset: 0;
-    background: url('https://images.unsplash.com/photo-1560066984-138daab0b3a1?w=900&q=80') center/cover no-repeat;
-    opacity: 0.5;
-    mix-blend-mode: luminosity;
-  }
-  .hero-pattern {
-    position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(
-      45deg, transparent, transparent 30px,
-      rgba(201,169,110,0.05) 30px, rgba(201,169,110,0.05) 31px
-    );
-  }
-  .hero-badge {
-    position: absolute; bottom: 60px; right: 60px;
-    width: 120px; height: 120px;
-    border: 1px solid rgba(201,169,110,0.4);
-    border-radius: 50%;
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    color: var(--gold-light);
-    text-align: center;
-    animation: rotateBadge 20s linear infinite;
-  }
-  .hero-badge-inner {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem; font-weight: 300;
-    line-height: 1; color: var(--gold);
-  }
-  .hero-badge-text {
-    font-size: 0.55rem; letter-spacing: 0.15em;
-    text-transform: uppercase; margin-top: 4px;
-  }
-  @keyframes rotateBadge { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-
-  /* STATS */
-  .stats {
-    background: var(--dark);
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    border-top: 1px solid rgba(201,169,110,0.2);
-  }
-  .stat-item {
-    padding: 40px; text-align: center;
-    border-right: 1px solid rgba(201,169,110,0.15);
-  }
-  .stat-item:last-child { border-right: none; }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 3rem; font-weight: 300;
-    color: var(--gold); line-height: 1;
-  }
-  .stat-label {
-    font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(245,240,232,0.5); margin-top: 8px;
-  }
-
-  /* SECTION COMMON */
-  section { padding: 100px 80px; }
-  .section-label {
-    font-size: 0.7rem; letter-spacing: 0.3em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 16px;
-    display: flex; align-items: center; gap: 12px;
-  }
-  .section-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); }
-  .section-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(2.5rem, 4vw, 3.5rem);
-    font-weight: 300; line-height: 1.1;
-    margin-bottom: 20px;
-  }
-
-  /* SERVICES */
-  .services-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 2px; margin-top: 60px;
-    background: rgba(201,169,110,0.15);
-  }
-  .service-card {
-    background: var(--card-bg);
-    padding: 50px 40px;
-    transition: all 0.4s;
-    cursor: default;
-    position: relative; overflow: hidden;
-  }
-  .service-card::before {
-    content: ''; position: absolute;
-    bottom: 0; left: 0; width: 0; height: 3px;
-    background: var(--gold);
-    transition: width 0.4s;
-  }
-  .service-card:hover::before { width: 100%; }
-  .service-card:hover { background: white; transform: translateY(-4px); }
-  .service-icon {
-    font-size: 2rem; margin-bottom: 20px;
-    display: block;
-  }
-  .service-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.4rem; font-weight: 400; margin-bottom: 12px;
-  }
-  .service-desc {
-    font-size: 0.85rem; color: var(--warm-gray);
-    line-height: 1.7; margin-bottom: 24px; font-weight: 300;
-  }
-  .service-price {
-    font-size: 0.75rem; letter-spacing: 0.15em;
-    text-transform: uppercase; color: var(--gold);
-    font-weight: 500;
-  }
-
-  /* BOOKING SECTION */
-  .booking-section {
-    background: var(--dark);
-    color: var(--cream);
-    padding: 100px 80px;
-  }
-  .booking-section .section-title { color: var(--cream); }
-  .booking-section .section-label { color: var(--gold); }
-  .booking-layout {
-    display: grid; grid-template-columns: 1fr 1.5fr;
-    gap: 80px; margin-top: 60px; align-items: start;
-  }
-  .booking-info h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.5rem; font-weight: 300; margin-bottom: 16px;
-    color: var(--gold-light);
-  }
-  .booking-info p {
-    font-size: 0.88rem; line-height: 1.8;
-    color: rgba(245,240,232,0.6); margin-bottom: 32px; font-weight: 300;
-  }
-  .info-item {
-    display: flex; gap: 16px; align-items: flex-start;
-    margin-bottom: 20px;
-  }
-  .info-icon {
-    width: 36px; height: 36px;
-    border: 1px solid rgba(201,169,110,0.3);
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 0.9rem; flex-shrink: 0;
-    color: var(--gold);
-  }
-  .info-text { font-size: 0.85rem; color: rgba(245,240,232,0.7); line-height: 1.6; }
-  .info-text strong { color: var(--cream); font-weight: 400; display: block; }
-
-  /* FORM */
-  .booking-form {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(201,169,110,0.15);
-    border-radius: 4px;
-    padding: 50px;
-  }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-  .form-group { margin-bottom: 24px; }
-  .form-group label {
-    display: block; font-size: 0.65rem;
-    letter-spacing: 0.2em; text-transform: uppercase;
-    color: rgba(245,240,232,0.5); margin-bottom: 10px;
-  }
-  .form-group input,
-  .form-group select,
-  .form-group textarea {
-    width: 100%; background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(201,169,110,0.2);
-    border-radius: 2px;
-    padding: 14px 18px;
-    color: var(--cream);
-    font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 300;
-    outline: none;
-    transition: border-color 0.3s, background 0.3s;
-    -webkit-appearance: none;
-  }
-  .form-group select option { background: #1a1410; }
-  .form-group input:focus,
-  .form-group select:focus,
-  .form-group textarea:focus {
-    border-color: var(--gold);
-    background: rgba(201,169,110,0.05);
-  }
-  .form-group input::placeholder,
-  .form-group textarea::placeholder { color: rgba(245,240,232,0.25); }
-  .form-group textarea { resize: vertical; min-height: 100px; }
-
-  /* TIMESLOTS */
-  .timeslots {
-    display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px;
-    margin-top: 8px;
-  }
-  .slot {
-    padding: 10px 6px; text-align: center;
-    border: 1px solid rgba(201,169,110,0.2);
-    border-radius: 3px; cursor: pointer;
-    font-size: 0.78rem; color: rgba(245,240,232,0.6);
-    transition: all 0.2s; user-select: none;
-    line-height: 1.3;
-  }
-  .slot:hover:not(.occupied):not(.unavailable) { border-color: var(--gold); color: var(--cream); }
-  .slot.selected { background: var(--gold); border-color: var(--gold); color: var(--dark); font-weight: 500; }
-  .slot.occupied {
-    cursor: not-allowed;
-    background: rgba(255,255,255,0.03);
-    border-color: rgba(255,255,255,0.07);
-    position: relative; overflow: hidden;
-  }
-  .slot.occupied .slot-time {
-    font-size: 0.72rem;
-    color: rgba(245,240,232,0.25);
-    text-decoration: line-through;
-  }
-  .slot.occupied .slot-label {
-    display: block; font-size: 0.58rem;
-    letter-spacing: 0.08em; text-transform: uppercase;
-    color: rgba(201,74,74,0.6); margin-top: 2px;
-  }
-  .slot.available .slot-time { color: rgba(245,240,232,0.7); }
-  .slot.available .slot-label {
-    display: block; font-size: 0.58rem; letter-spacing: 0.06em;
-    text-transform: uppercase; color: rgba(74,158,107,0.7); margin-top: 2px;
-  }
-  .slot.selected .slot-time { color: var(--dark); font-weight: 600; }
-  .slot.selected .slot-label { color: rgba(26,20,16,0.6); }
-  .slot.unavailable { opacity: 0.2; cursor: not-allowed; }
-
-  /* Slots loading state */
-  .slots-loading {
-    grid-column: 1 / -1; text-align: center;
-    padding: 20px; color: rgba(245,240,232,0.3);
-    font-size: 0.8rem; letter-spacing: 0.1em;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-  }
-  .spinner {
-    width: 16px; height: 16px; border: 2px solid rgba(201,169,110,0.2);
-    border-top-color: var(--gold); border-radius: 50%;
-    animation: spin 0.8s linear infinite; flex-shrink: 0;
-  }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .slots-hint {
-    font-size: 0.72rem; color: rgba(245,240,232,0.3);
-    margin-top: 10px; letter-spacing: 0.05em;
-    display: none;
-  }
-  .slots-hint.show { display: block; }
-
-  .btn-submit {
-    width: 100%; background: var(--gold);
-    color: var(--dark); border: none; cursor: pointer;
-    font-family: 'Jost', sans-serif;
-    font-size: 0.75rem; letter-spacing: 0.25em; text-transform: uppercase;
-    padding: 18px; border-radius: 2px;
-    transition: all 0.3s; margin-top: 8px; font-weight: 500;
-  }
-  .btn-submit:hover { background: var(--gold-light); }
-  .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-
-  /* SUCCESS STATE */
-  .success-msg {
-    display: none; text-align: center; padding: 40px 20px;
-  }
-  .success-msg.show { display: block; }
-  .success-icon { font-size: 3rem; margin-bottom: 16px; }
-  .success-msg h3 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 2rem; font-weight: 300; color: var(--gold); margin-bottom: 12px;
-  }
-  .success-msg p { color: rgba(245,240,232,0.6); font-size: 0.9rem; line-height: 1.7; }
-
-  /* ABOUT */
-  .about-section {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: center;
-  }
-  .about-img-container {
-    position: relative; height: 550px;
-  }
-  .about-img-main {
-    width: 80%; height: 100%;
-    object-fit: cover;
-    border-radius: 2px;
-  }
-  .about-img-accent {
-    position: absolute; right: 0; bottom: 60px;
-    width: 45%; height: 280px;
-    object-fit: cover;
-    border-radius: 2px;
-    border: 6px solid var(--cream);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
-  }
-  .about-gold-line {
-    width: 60px; height: 2px; background: var(--gold);
-    margin: 24px 0;
-  }
-  .about-text {
-    font-size: 0.9rem; line-height: 1.9;
-    color: var(--warm-gray); font-weight: 300;
-    margin-bottom: 16px;
-  }
-
-  /* FOOTER */
-  footer {
-    background: #0f0c09;
-    color: rgba(245,240,232,0.5);
-    padding: 60px 80px;
-    display: grid; grid-template-columns: 2fr 1fr 1fr;
-    gap: 60px; border-top: 1px solid rgba(201,169,110,0.1);
-  }
-  .footer-brand .nav-logo { font-size: 1.6rem; color: var(--cream); }
-  .footer-brand p {
-    font-size: 0.82rem; line-height: 1.8; margin-top: 16px;
-    color: rgba(245,240,232,0.4); max-width: 280px;
-  }
-  .footer-col h4 {
-    font-size: 0.65rem; letter-spacing: 0.25em; text-transform: uppercase;
-    color: var(--gold); margin-bottom: 20px;
-  }
-  .footer-col p, .footer-col a {
-    font-size: 0.82rem; line-height: 2;
-    color: rgba(245,240,232,0.5); text-decoration: none; display: block;
-    transition: color 0.3s;
-  }
-  .footer-col a:hover { color: var(--gold); }
-  .footer-bottom {
-    border-top: 1px solid rgba(201,169,110,0.1);
-    padding: 24px 80px; background: #0f0c09;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .footer-bottom p { font-size: 0.75rem; color: rgba(245,240,232,0.3); }
-
-  /* TOAST */
-  .toast {
-    position: fixed; top: 100px; right: 30px; z-index: 999;
-    background: var(--dark);
-    border: 1px solid var(--gold);
-    border-radius: 4px;
-    padding: 16px 24px; min-width: 300px;
-    transform: translateX(400px); opacity: 0;
-    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-  }
-  .toast.show { transform: translateX(0); opacity: 1; }
-  .toast-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 1.1rem; color: var(--gold); margin-bottom: 4px;
-  }
-  .toast-msg { font-size: 0.8rem; color: rgba(245,240,232,0.6); }
-
-  /* SCROLL ANIM */
-  .fade-up {
-    opacity: 0; transform: translateY(30px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-  .fade-up.visible { opacity: 1; transform: translateY(0); }
-
-  /* MOBILE */
-  @media (max-width: 900px) {
-    nav { padding: 20px 24px; }
-    .nav-links { display: none; }
-    section { padding: 60px 24px; }
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { height: 300px; }
-    .hero-left { padding: 60px 24px; }
-    .services-grid { grid-template-columns: 1fr; }
-    .booking-section { padding: 60px 24px; }
-    .booking-layout { grid-template-columns: 1fr; gap: 40px; }
-    .booking-form { padding: 30px 24px; }
-    .form-row { grid-template-columns: 1fr; }
-    .stats { grid-template-columns: 1fr; }
-    footer { grid-template-columns: 1fr; padding: 40px 24px; gap: 32px; }
-    .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; }
-    .about-section { grid-template-columns: 1fr; }
-    .about-img-container { height: 300px; }
-    .timeslots { grid-template-columns: repeat(3, 1fr); }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Casal Menezes Hair Shop – Portimão</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/index.css">
+  <link rel="stylesheet" href="css/booking.css">
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ── NAVEGAÇÃO ──────────────────────────────────────────── -->
 <nav>
   <div class="nav-logo">Casal Menezes <span>Hair Shop</span></div>
   <ul class="nav-links">
@@ -512,7 +21,7 @@
   </ul>
 </nav>
 
-<!-- HERO -->
+<!-- ── HERO ───────────────────────────────────────────────── -->
 <section class="hero" id="inicio">
   <div class="hero-left">
     <div class="hero-eyebrow">Portimão, Algarve</div>
@@ -520,12 +29,12 @@
       A arte<br>de <em>cuidar</em><br>do seu cabelo
     </h1>
     <p class="hero-sub">
-      No Casal Menezes Hair Shop, cada cliente é tratado com atenção personalizada. 
+      No Casal Menezes Hair Shop, cada cliente é tratado com atenção personalizada.
       Especialistas em cortes, colorações e tratamentos de luxo no coração do Algarve.
     </p>
     <div class="hero-actions">
       <a href="#marcacao" class="btn-primary">Marcar Consulta</a>
-      <a href="#servicos" class="btn-outline">Ver Serviços</a>
+      <a href="#servicos"  class="btn-outline">Ver Serviços</a>
     </div>
   </div>
   <div class="hero-right">
@@ -538,7 +47,7 @@
   </div>
 </section>
 
-<!-- STATS -->
+<!-- ── STATS ──────────────────────────────────────────────── -->
 <div class="stats">
   <div class="stat-item">
     <div class="stat-num">500+</div>
@@ -554,14 +63,16 @@
   </div>
 </div>
 
-<!-- SERVICES -->
+<!-- ── SERVIÇOS ───────────────────────────────────────────── -->
 <section id="servicos">
   <div class="section-label fade-up">Os Nossos Serviços</div>
-  <h2 class="section-title fade-up">Tratamentos <em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)">premium</em><br>para si</h2>
+  <h2 class="section-title fade-up">
+    Tratamentos <em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)">premium</em><br>para si
+  </h2>
   <div class="services-grid fade-up">
     <div class="service-card">
       <span class="service-icon">✂️</span>
-      <div class="service-name">Corte & Styling</div>
+      <div class="service-name">Corte &amp; Styling</div>
       <p class="service-desc">Cortes personalizados para homem e mulher, adaptados ao seu estilo de vida e tipo de cabelo.</p>
       <div class="service-price">A partir de €15</div>
     </div>
@@ -591,87 +102,77 @@
     </div>
     <div class="service-card">
       <span class="service-icon">🪒</span>
-      <div class="service-name">Barba & Bigode</div>
+      <div class="service-name">Barba &amp; Bigode</div>
       <p class="service-desc">Aparar, modelar e cuidar da barba com produtos premium para um acabamento perfeito.</p>
       <div class="service-price">A partir de €12</div>
     </div>
   </div>
 </section>
 
-<!-- ABOUT -->
-<section id="sobre" style="padding-top: 0;">
+<!-- ── SOBRE NÓS ───────────────────────────────────────────── -->
+<section id="sobre" style="padding-top:0">
   <div class="about-section fade-up">
     <div class="about-img-container">
-      <img class="about-img-main" 
-           src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80" 
-           alt="Interior do salão" style="width:80%;height:100%;object-fit:cover;border-radius:2px;">
+      <img class="about-img-main"
+           src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80"
+           alt="Interior do salão">
       <img class="about-img-accent"
            src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=400&q=80"
            alt="Detalhe do serviço">
     </div>
     <div>
       <div class="section-label">A Nossa História</div>
-      <h2 class="section-title">Paixão pelo<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)">cabelo perfeito</em></h2>
+      <h2 class="section-title">
+        Paixão pelo<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)">cabelo perfeito</em>
+      </h2>
       <div class="about-gold-line"></div>
       <p class="about-text">
-        O Casal Menezes Hair Shop nasceu da paixão pelo cuidado capilar e pela vontade de 
-        oferecer um serviço verdadeiramente personalizado em Portimão. Com anos de experiência 
+        O Casal Menezes Hair Shop nasceu da paixão pelo cuidado capilar e pela vontade de
+        oferecer um serviço verdadeiramente personalizado em Portimão. Com anos de experiência
         e formação contínua, a nossa equipa acompanha as últimas tendências mundiais.
       </p>
       <p class="about-text">
-        Utilizamos exclusivamente produtos profissionais de alta qualidade, garantindo 
+        Utilizamos exclusivamente produtos profissionais de alta qualidade, garantindo
         resultados duradouros e o máximo cuidado com a saúde do seu cabelo.
       </p>
-      <a href="#marcacao" class="btn-primary" style="margin-top:16px;">Conhecer-nos</a>
+      <a href="#marcacao" class="btn-primary" style="margin-top:16px">Conhecer-nos</a>
     </div>
   </div>
 </section>
 
-<!-- BOOKING -->
+<!-- ── MARCAÇÃO ───────────────────────────────────────────── -->
 <section class="booking-section" id="marcacao">
   <div class="section-label">Reserva Online</div>
-  <h2 class="section-title">Marque a sua<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)">visita</em></h2>
+  <h2 class="section-title">
+    Marque a sua<br><em style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold)">visita</em>
+  </h2>
 
   <div class="booking-layout">
-    <!-- INFO -->
+
+    <!-- Info lateral -->
     <div class="booking-info fade-up">
       <h3>Reserve o seu momento</h3>
-      <p>Marque diretamente online sem precisar de ligar. Recebe uma confirmação por email ou SMS.</p>
+      <p>Marque diretamente online sem precisar de ligar. Recebe confirmação por email ou SMS.</p>
       <div class="info-item">
         <div class="info-icon">📍</div>
-        <div class="info-text">
-          <strong>Localização</strong>
-          Rua Marreiros Netto, Portimão<br>8500, Algarve
-        </div>
+        <div class="info-text"><strong>Localização</strong>Rua Marreiros Netto, Portimão<br>8500, Algarve</div>
       </div>
       <div class="info-item">
         <div class="info-icon">🕐</div>
-        <div class="info-text">
-          <strong>Horário</strong>
-          Segunda – Sexta: 9h – 19h<br>
-          Sábado: 9h – 17h<br>
-          Domingo: Fechado
-        </div>
+        <div class="info-text"><strong>Horário</strong>Segunda – Sexta: 9h – 19h<br>Sábado: 9h – 17h<br>Domingo: Fechado</div>
       </div>
       <div class="info-item">
         <div class="info-icon">📞</div>
-        <div class="info-text">
-          <strong>Contacto</strong>
-          +351 282 000 000<br>
-          casalmenezes@email.com
-        </div>
+        <div class="info-text"><strong>Contacto</strong>+351 282 000 000<br>casalmenezes@email.com</div>
       </div>
       <div class="info-item">
         <div class="info-icon">💳</div>
-        <div class="info-text">
-          <strong>Pagamento</strong>
-          Multibanco, MB Way, Numerário
-        </div>
+        <div class="info-text"><strong>Pagamento</strong>Multibanco, MB Way, Numerário</div>
       </div>
     </div>
 
-    <!-- FORM -->
-    <div class="booking-form fade-up" id="bookingForm">
+    <!-- Formulário -->
+    <div class="booking-form fade-up">
       <div id="formContent">
         <div class="form-row">
           <div class="form-group">
@@ -697,12 +198,12 @@
           <label>Serviço *</label>
           <select id="service" required>
             <option value="">Selecione um serviço</option>
-            <option value="corte">Corte & Styling</option>
+            <option value="corte">Corte &amp; Styling</option>
             <option value="coloracao">Coloração</option>
             <option value="tratamento">Tratamentos Capilares</option>
             <option value="noiva">Penteados Noiva</option>
             <option value="massagem">Massagem Capilar</option>
-            <option value="barba">Barba & Bigode</option>
+            <option value="barba">Barba &amp; Bigode</option>
           </select>
         </div>
         <div class="form-row">
@@ -720,15 +221,18 @@
           </div>
         </div>
         <div class="form-group">
-          <label>Horário * <span id="slotsDateLabel" style="font-size:0.6rem;color:rgba(245,240,232,0.3);text-transform:none;letter-spacing:0;margin-left:6px;font-style:italic;"></span></label>
+          <label>
+            Horário *
+            <span id="slotsDateLabel" style="font-size:0.6rem;color:rgba(245,240,232,0.3);text-transform:none;letter-spacing:0;margin-left:6px;font-style:italic;"></span>
+          </label>
           <div class="timeslots" id="timeslots">
             <div id="slotsPlaceholder" style="grid-column:1/-1;text-align:center;padding:24px 10px;color:rgba(245,240,232,0.2);font-size:0.8rem;letter-spacing:0.08em;">
               Escolha primeiro uma data acima
             </div>
           </div>
           <div class="slots-hint" id="slotsHint">
-            <span style="color:rgba(74,158,107,0.8);">&#9632;</span> Disponível &nbsp;&nbsp;
-            <span style="color:rgba(201,74,74,0.6);">&#9632;</span> Ocupado
+            <span style="color:rgba(74,158,107,0.8)">&#9632;</span> Disponível &nbsp;&nbsp;
+            <span style="color:rgba(201,74,74,0.6)">&#9632;</span> Ocupado
           </div>
           <input type="hidden" id="selectedTime">
         </div>
@@ -740,19 +244,21 @@
           Confirmar Marcação
         </button>
       </div>
+
       <div class="success-msg" id="successMsg">
         <div class="success-icon">✅</div>
         <h3>Marcação Recebida!</h3>
         <p>Obrigado pela sua marcação.<br>Entraremos em contacto para confirmar brevemente.</p>
-        <button class="btn-primary" style="margin-top:24px;border:none;cursor:pointer;" onclick="resetForm()">
+        <button class="btn-primary" style="margin-top:24px;border:none;cursor:pointer" onclick="resetForm()">
           Nova Marcação
         </button>
       </div>
     </div>
+
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- ── FOOTER ──────────────────────────────────────────────── -->
 <footer>
   <div class="footer-brand">
     <div class="nav-logo">Casal Menezes <span>Hair Shop</span></div>
@@ -760,7 +266,7 @@
   </div>
   <div class="footer-col">
     <h4>Serviços</h4>
-    <a href="#servicos">Corte & Styling</a>
+    <a href="#servicos">Corte &amp; Styling</a>
     <a href="#servicos">Coloração</a>
     <a href="#servicos">Tratamentos</a>
     <a href="#servicos">Noiva</a>
@@ -771,218 +277,21 @@
     <p>Portimão, Algarve</p>
     <p>+351 282 000 000</p>
     <p>casalmenezes@email.com</p>
-    <p style="margin-top:8px;">Seg–Sex: 9h–19h</p>
+    <p style="margin-top:8px">Seg–Sex: 9h–19h</p>
     <p>Sábado: 9h–17h</p>
   </div>
 </footer>
 <div class="footer-bottom">
   <p>© 2025 Casal Menezes Hair Shop. Todos os direitos reservados.</p>
-  <p style="color:rgba(245,240,232,0.2);">Portimão · Algarve · Portugal</p>
+  <p style="color:rgba(245,240,232,0.2)">Portimão · Algarve · Portugal</p>
 </div>
 
-<!-- TOAST -->
+<!-- ── TOAST ───────────────────────────────────────────────── -->
 <div class="toast" id="toast">
-  <div class="toast-title" id="toastTitle">Marcação enviada!</div>
-  <div class="toast-msg" id="toastMsg">Recebemos o seu pedido.</div>
+  <div class="toast-title" id="toastTitle"></div>
+  <div class="toast-msg"   id="toastMsg"></div>
 </div>
 
-<script>
-  // ── CONFIG ─────────────────────────────────────────────────────────────
-  // All available time slots (weekday vs saturday)
-  const SLOTS_WEEKDAY = ['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30'];
-  const SLOTS_SATURDAY = ['09:00','09:30','10:00','10:30','11:00','11:30','14:00','14:30','15:00','15:30','16:00','16:30'];
-
-  // Mock booked slots — will be replaced by Supabase query
-  // Format: { 'YYYY-MM-DD': ['HH:MM', 'HH:MM', ...] }
-  const BOOKED_SLOTS = {
-    '2025-08-18': ['09:00', '10:00', '15:00'],
-    '2025-08-19': ['09:30', '11:00', '14:00', '14:30'],
-    '2025-08-20': ['10:00', '10:30', '14:30'],
-  };
-
-  let selectedTime = null;
-
-  // ── DATE INPUT ──────────────────────────────────────────────────────────
-  const dateInput = document.getElementById('bookDate');
-  const today = new Date();
-  const yyyy = today.getFullYear();
-  const mm = String(today.getMonth()+1).padStart(2,'0');
-  const dd = String(today.getDate()).padStart(2,'0');
-  dateInput.min = `${yyyy}-${mm}-${dd}`;
-
-  dateInput.addEventListener('change', onDateOrStylistChange);
-  document.getElementById('stylist').addEventListener('change', onDateOrStylistChange);
-
-  async function onDateOrStylistChange() {
-    const date = document.getElementById('bookDate').value;
-    if (!date) return;
-
-    const d = new Date(date + 'T12:00');
-    const dayOfWeek = d.getDay();
-
-    // Block sundays
-    if (dayOfWeek === 0) {
-      showToast('Atenção', 'Estamos fechados ao domingo. Por favor escolha outro dia.', true);
-      dateInput.value = '';
-      clearSlots();
-      return;
-    }
-
-    // Show loading
-    const container = document.getElementById('timeslots');
-    container.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:20px;color:rgba(245,240,232,0.3);font-size:0.8rem;display:flex;align-items:center;justify-content:center;gap:10px;">
-      <div class="spinner"></div> A verificar disponibilidade...
-    </div>`;
-    document.getElementById('slotsHint').classList.remove('show');
-
-    // Update label
-    const DAYS_PT = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
-    const MONTHS_PT = ['jan','fev','mar','abr','mai','jun','jul','ago','set','out','nov','dez'];
-    document.getElementById('slotsDateLabel').textContent =
-      `— ${DAYS_PT[dayOfWeek]}, ${d.getDate()} ${MONTHS_PT[d.getMonth()]}`;
-
-    // Fetch booked slots for this date
-    // TODO: Replace with real Supabase call:
-    // const stylist = document.getElementById('stylist').value;
-    // let query = supabase.from('bookings').select('time').eq('date', date).neq('status','cancelled');
-    // if (stylist) query = query.eq('stylist', stylist);
-    // const { data } = await query;
-    // const occupiedTimes = data.map(b => b.time);
-
-    await new Promise(r => setTimeout(r, 500)); // simulate network
-    const occupiedTimes = BOOKED_SLOTS[date] || [];
-
-    const slots = dayOfWeek === 6 ? SLOTS_SATURDAY : SLOTS_WEEKDAY;
-    renderSlots(slots, occupiedTimes);
-  }
-
-  function renderSlots(slots, occupiedTimes) {
-    const container = document.getElementById('timeslots');
-    // Reset selected time if it's now occupied
-    if (selectedTime && occupiedTimes.includes(selectedTime)) {
-      selectedTime = null;
-      document.getElementById('selectedTime').value = '';
-    }
-    const availableCount = slots.length - occupiedTimes.filter(t => slots.includes(t)).length;
-
-    container.innerHTML = slots.map(time => {
-      const isOccupied = occupiedTimes.includes(time);
-      if (isOccupied) {
-        return `<div class="slot occupied" title="Este horário já está ocupado">
-          <span class="slot-time">${time}</span>
-          <span class="slot-label">Ocupado</span>
-        </div>`;
-      } else {
-        const isSelected = time === selectedTime;
-        return `<div class="slot available${isSelected ? ' selected' : ''}" data-time="${time}" onclick="selectSlot(this, '${time}')">
-          <span class="slot-time">${time}</span>
-          <span class="slot-label">Livre</span>
-        </div>`;
-      }
-    }).join('');
-
-    document.getElementById('slotsHint').classList.add('show');
-
-    if (availableCount === 0) {
-      container.innerHTML += `<div style="grid-column:1/-1;text-align:center;padding:12px;color:rgba(245,240,232,0.35);font-size:0.78rem;">
-        Sem horários disponíveis neste dia. Por favor escolha outra data.
-      </div>`;
-    }
-  }
-
-  function selectSlot(el, time) {
-    document.querySelectorAll('.slot.available').forEach(s => {
-      s.classList.remove('selected');
-      s.querySelector('.slot-label').textContent = 'Livre';
-    });
-    el.classList.add('selected');
-    el.querySelector('.slot-label').textContent = 'Selecionado';
-    selectedTime = time;
-    document.getElementById('selectedTime').value = time;
-  }
-
-  function clearSlots() {
-    document.getElementById('timeslots').innerHTML = `<div id="slotsPlaceholder" style="grid-column:1/-1;text-align:center;padding:24px 10px;color:rgba(245,240,232,0.2);font-size:0.8rem;letter-spacing:0.08em;">
-      Escolha primeiro uma data acima
-    </div>`;
-    document.getElementById('slotsHint').classList.remove('show');
-    document.getElementById('slotsDateLabel').textContent = '';
-    selectedTime = null;
-    document.getElementById('selectedTime').value = '';
-  }
-
-  // ── FORM ───────────────────────────────────────────────────────────────
-  function validateForm() {
-    const fname = document.getElementById('fname').value.trim();
-    const lname = document.getElementById('lname').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const service = document.getElementById('service').value;
-    const date = document.getElementById('bookDate').value;
-    if(!fname || !lname || !phone || !service || !date || !selectedTime) {
-      showToast('Campos em falta', 'Por favor preencha todos os campos obrigatórios (*).',true);
-      return false;
-    }
-    return true;
-  }
-
-  function submitBooking() {
-    if(!validateForm()) return;
-    const btn = document.getElementById('submitBtn');
-    btn.disabled = true;
-    btn.textContent = 'A enviar...';
-
-    const booking = {
-      first_name: document.getElementById('fname').value.trim(),
-      last_name: document.getElementById('lname').value.trim(),
-      phone: document.getElementById('phone').value.trim(),
-      email: document.getElementById('email').value.trim(),
-      service: document.getElementById('service').value,
-      stylist: document.getElementById('stylist').value,
-      date: document.getElementById('bookDate').value,
-      time: selectedTime,
-      notes: document.getElementById('notes').value.trim(),
-      status: 'pending',
-      created_at: new Date().toISOString()
-    };
-
-    // TODO: await supabase.from('bookings').insert(booking)
-    console.log('📅 Booking ready for Supabase:', booking);
-
-    // Add to local mock so the slot shows as occupied immediately after booking
-    if (!BOOKED_SLOTS[booking.date]) BOOKED_SLOTS[booking.date] = [];
-    BOOKED_SLOTS[booking.date].push(booking.time);
-
-    setTimeout(() => {
-      document.getElementById('formContent').style.display = 'none';
-      document.getElementById('successMsg').classList.add('show');
-      showToast('✅ Confirmado!', `Marcação para ${booking.date} às ${booking.time}`);
-      btn.disabled = false;
-    }, 1000);
-  }
-
-  function resetForm() {
-    document.getElementById('formContent').style.display = 'block';
-    document.getElementById('successMsg').classList.remove('show');
-    document.querySelectorAll('input[type=text], input[type=tel], input[type=email], input[type=date], select, textarea').forEach(el => el.value = '');
-    clearSlots();
-  }
-
-  function showToast(title, msg, isError = false) {
-    const t = document.getElementById('toast');
-    document.getElementById('toastTitle').textContent = title;
-    document.getElementById('toastMsg').textContent = msg;
-    t.style.borderColor = isError ? '#e05c5c' : 'var(--gold)';
-    t.classList.add('show');
-    setTimeout(() => t.classList.remove('show'), 4000);
-  }
-
-  // Scroll animations
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if(e.isIntersecting) { e.target.classList.add('visible'); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
-</script>
+<script src="js/booking.js"></script>
 </body>
 </html>
