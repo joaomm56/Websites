@@ -51,7 +51,7 @@ main { padding-top: 80px; min-height: 100vh; }
 /* ── CAIXA DE PESQUISA ───────────────────────────────────── */
 .search-container {
   width: 100%; max-width: 520px;
-  margin: -32px auto 80px;
+  margin: 80px auto 80px;
   padding: 0 20px;
   position: relative; z-index: 10;
   box-sizing: border-box;
