@@ -199,33 +199,38 @@
     <div class="page" id="page-settings">
       <div class="page-hdr">
         <h1>Definições</h1>
-        <p>Altere as suas credenciais de acesso</p>
+        <p>Gerir credenciais de acesso</p>
       </div>
       <div class="page-body">
         <div class="settings-card">
+
+          <div class="settings-current-badge">
+            <span class="settings-badge-label">Sessão iniciada como</span>
+            <span class="settings-badge-user" id="settingsCurrentUser">—</span>
+          </div>
+
+          <div class="settings-divider"></div>
           <h3 class="settings-title">Alterar Credenciais</h3>
-          <p class="settings-sub">As alterações aplicam-se imediatamente.</p>
+          <p class="settings-sub">Preencha apenas os campos que pretende alterar.</p>
 
           <div class="settings-form">
-            <div class="form-group">
-              <label class="form-label">Utilizador atual</label>
-              <input type="text" class="form-input" id="settingsCurrentUser" disabled>
+            <div class="sfield">
+              <label class="sfield-label">Novo nome de utilizador</label>
+              <input type="text" class="sfield-input" id="settingsNewUser" autocomplete="off" placeholder="ex: ana">
             </div>
-            <div class="form-group">
-              <label class="form-label">Novo nome de utilizador</label>
-              <input type="text" class="form-input" id="settingsNewUser" placeholder="Deixe em branco para não alterar">
+            <div class="sfield">
+              <label class="sfield-label">Nova password</label>
+              <input type="password" class="sfield-input" id="settingsNewPass" autocomplete="new-password" placeholder="Mínimo 6 caracteres">
             </div>
-            <div class="form-group">
-              <label class="form-label">Nova password</label>
-              <input type="password" class="form-input" id="settingsNewPass" placeholder="Deixe em branco para não alterar">
+            <div class="sfield">
+              <label class="sfield-label">Confirmar nova password</label>
+              <input type="password" class="sfield-input" id="settingsConfirmPass" autocomplete="new-password" placeholder="Repita a nova password">
             </div>
-            <div class="form-group">
-              <label class="form-label">Confirmar nova password</label>
-              <input type="password" class="form-input" id="settingsConfirmPass" placeholder="Repita a nova password">
-            </div>
-            <div id="settingsError" class="settings-error" style="display:none"></div>
-            <div id="settingsSuccess" class="settings-success" style="display:none">✓ Credenciais atualizadas com sucesso</div>
-            <button class="btn-primary" onclick="saveSettings()">Guardar Alterações</button>
+
+            <div id="settingsError" class="settings-msg settings-msg--error" style="display:none"></div>
+            <div id="settingsSuccess" class="settings-msg settings-msg--success" style="display:none">✓ Credenciais atualizadas com sucesso</div>
+
+            <button class="settings-btn" onclick="saveSettings()">Guardar Alterações</button>
           </div>
         </div>
       </div>

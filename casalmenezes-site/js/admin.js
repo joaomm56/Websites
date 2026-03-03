@@ -30,6 +30,7 @@ async function doLogin() {
     const ok = await res.json();
     if (!ok) { errEl.classList.add('show'); return; }
 
+    sessionStorage.setItem('admin_user', user);
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('app').classList.add('show');
     document.getElementById('sidebarUser').textContent = user.charAt(0).toUpperCase() + user.slice(1);
@@ -40,6 +41,7 @@ async function doLogin() {
   }
 }
 function doLogout() {
+  sessionStorage.removeItem('admin_user');
   document.getElementById('app').classList.remove('show');
   document.getElementById('loginScreen').style.display = 'flex';
   document.getElementById('loginPass').value = '';
@@ -222,7 +224,11 @@ document.addEventListener('DOMContentLoaded', () => {
 /* ── DEFINIÇÕES ──────────────────────────────────────────── */
 function initSettings() {
   const user = sessionStorage.getItem('admin_user') || '';
-  document.getElementById('settingsCurrentUser').value = user;
+  const el = document.getElementById('settingsCurrentUser');
+  if (el) el.textContent = user.charAt(0).toUpperCase() + user.slice(1);
+  ['settingsNewUser','settingsNewPass','settingsConfirmPass'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('settingsError').style.display = 'none';
+  document.getElementById('settingsSuccess').style.display = 'none';
 }
 
 async function saveSettings() {
@@ -230,14 +236,12 @@ async function saveSettings() {
   const newUser     = document.getElementById('settingsNewUser').value.trim().toLowerCase();
   const newPass     = document.getElementById('settingsNewPass').value;
   const confirmPass = document.getElementById('settingsConfirmPass').value;
-  const errEl       = document.getElementById('settingsError');
-  const okEl        = document.getElementById('settingsSuccess');
-
-  errEl.style.display = 'none';
-  okEl.style.display  = 'none';
+  const errEl = document.getElementById('settingsError');
+  const okEl  = document.getElementById('settingsSuccess');
+  errEl.style.display = 'none'; okEl.style.display = 'none';
 
   if (!newUser && !newPass) {
-    errEl.textContent = 'Introduza um novo utilizador ou password.';
+    errEl.textContent = 'Preencha pelo menos um campo para alterar.';
     errEl.style.display = 'block'; return;
   }
   if (newPass && newPass !== confirmPass) {
@@ -249,31 +253,35 @@ async function saveSettings() {
     errEl.style.display = 'block'; return;
   }
 
-  const updates = {};
-  if (newUser) updates.username = newUser;
-  if (newPass) updates.password = newPass;
+  const btn = document.querySelector('#page-settings .settings-btn');
+  btn.textContent = 'A guardar...'; btn.disabled = true;
 
-  // Build SQL dynamically
-  const setClauses = Object.entries(updates).map(([k, v]) => `${k} = '${v.replace(/'/g,"''")}'`).join(', ');
-  const res = await fetch(`${SUPABASE_URL}/rest/v1/rpc/update_admin_credentials`, {
-    method: 'POST',
-    headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
-    body: JSON.stringify({ p_current_username: currentUser, ...updates.username ? { p_new_username: updates.username } : { p_new_username: currentUser }, ...updates.password ? { p_new_password: updates.password } : { p_new_password: null } })
-  });
+  try {
+    const res = await fetch(SUPABASE_URL + '/rest/v1/rpc/update_admin_credentials', {
+      method: 'POST',
+      headers: { 'apikey': SUPABASE_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        p_current_username: currentUser,
+        p_new_username: newUser || currentUser,
+        p_new_password: newPass || null
+      })
+    });
+    const ok = await res.json();
+    if (!ok) throw new Error('Utilizador não encontrado.');
 
-  if (!res.ok) {
-    errEl.textContent = 'Erro ao guardar. Tente novamente.';
-    errEl.style.display = 'block'; return;
+    const finalUser = newUser || currentUser;
+    sessionStorage.setItem('admin_user', finalUser);
+    const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
+    document.getElementById('sidebarUser').textContent = cap(finalUser);
+    document.getElementById('settingsCurrentUser').textContent = cap(finalUser);
+    const mu = document.getElementById('mobileUser'); if (mu) mu.textContent = cap(finalUser);
+    ['settingsNewUser','settingsNewPass','settingsConfirmPass'].forEach(id => document.getElementById(id).value = '');
+    okEl.style.display = 'block';
+    setTimeout(() => okEl.style.display = 'none', 4000);
+  } catch (err) {
+    errEl.textContent = err.message || 'Erro ao guardar. Tente novamente.';
+    errEl.style.display = 'block';
+  } finally {
+    btn.textContent = 'Guardar Alterações'; btn.disabled = false;
   }
-
-  // Update session
-  if (newUser) {
-    sessionStorage.setItem('admin_user', newUser);
-    document.getElementById('sidebarUser').textContent = newUser.charAt(0).toUpperCase() + newUser.slice(1);
-    document.getElementById('settingsCurrentUser').value = newUser;
-    document.getElementById('settingsNewUser').value = '';
-  }
-  document.getElementById('settingsNewPass').value = '';
-  document.getElementById('settingsConfirmPass').value = '';
-  okEl.style.display = 'block';
 }
