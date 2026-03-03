@@ -39,13 +39,13 @@
     </div>
     <nav class="sidebar-nav">
       <div class="nav-section">Principal</div>
-      <div class="sidebar-link active" onclick="showPage('dashboard')">
+      <div class="sidebar-link active" onclick="showPage('dashboard', this)">
         <span class="icon">📊</span> Dashboard
       </div>
-      <div class="sidebar-link" onclick="showPage('bookings')">
+      <div class="sidebar-link" onclick="showPage('bookings', this)">
         <span class="icon">📅</span> Marcações
       </div>
-      <div class="sidebar-link" onclick="showPage('calendar')">
+      <div class="sidebar-link" onclick="showPage('calendar', this)">
         <span class="icon">🗓️</span> Calendário
       </div>
       <div class="nav-section" style="margin-top:20px">Definições</div>
@@ -70,6 +70,7 @@
           <p id="todayDate"></p>
         </div>
       </div>
+      <div class="page-body">
       <div class="kpi-grid">
         <div class="kpi-card kpi-gold">
           <div class="kpi-label">Marcações Hoje</div>
@@ -92,10 +93,9 @@
           <div class="kpi-sub">marcações no total</div>
         </div>
       </div>
-      <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-weight:400;margin-bottom:16px">
-        Marcações de Hoje
-      </h3>
+      <h3 class="section-heading">Marcações de Hoje</h3>
       <div class="table-container" id="todayTable"></div>
+      </div><!-- /page-body -->
     </div>
 
     <!-- ── MARCAÇÕES ───────────────────────────────────────── -->
@@ -106,6 +106,7 @@
           <p>Gerir e acompanhar todas as marcações dos clientes</p>
         </div>
       </div>
+      <div class="page-body">
       <div class="filters">
         <input class="filter-input" type="text" id="filterSearch"
                placeholder="🔍  Pesquisar nome ou telemóvel..."
@@ -141,6 +142,7 @@
           <tbody id="bookingsTableBody"></tbody>
         </table>
       </div>
+      </div><!-- /page-body -->
     </div>
 
     <!-- ── CALENDÁRIO ──────────────────────────────────────── -->
@@ -151,6 +153,7 @@
           <p>Vista mensal de todas as marcações</p>
         </div>
       </div>
+      <div class="page-body">
       <div class="cal-header">
         <div class="cal-title" id="calTitle"></div>
         <div class="cal-nav">
@@ -170,6 +173,7 @@
         </div>
         <div class="cal-days" id="calDays"></div>
       </div>
+      </div><!-- /page-body -->
     </div>
 
   </div><!-- /content -->
@@ -188,7 +192,7 @@
   <div class="toast-title" id="toastTitle"></div>
   <div class="toast-msg"   id="toastMsg"></div>
 </div>
-
-<script src="js/admin.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/admin.js"></script>
 </body>
 </html>

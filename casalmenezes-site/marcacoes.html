@@ -29,15 +29,15 @@
   <div class="search-container" id="searchSection">
     <div class="search-card">
       <h2>Encontrar marcações</h2>
-      <p>Introduza o seu número de telemóvel ou email para ver todas as suas marcações.</p>
+      <p>Introduza o seu número de telemóvel <strong>e</strong> email para ver as suas marcações. Ambos os campos são obrigatórios.</p>
       <div class="form-group">
-        <label>Telemóvel</label>
-        <input type="tel" id="searchPhone" placeholder="+351 9XX XXX XXX">
+        <label>Telemóvel *</label>
+        <input type="tel" id="searchPhone" placeholder="+351 9XX XXX XXX" required>
       </div>
-      <div class="or-divider">ou</div>
+      <div class="or-divider">e</div>
       <div class="form-group">
-        <label>Email</label>
-        <input type="email" id="searchEmail" placeholder="email@exemplo.com">
+        <label>Email *</label>
+        <input type="email" id="searchEmail" placeholder="email@exemplo.com" required>
       </div>
       <button class="btn-search" id="searchBtn" onclick="searchBookings()">
         Ver as Minhas Marcações
@@ -84,7 +84,7 @@
   <div class="toast-title" id="toastTitle"></div>
   <div class="toast-msg"   id="toastMsg"></div>
 </div>
-
-<script src="js/cliente.js"></script>
+  <script src="js/supabase.js"></script>
+  <script src="js/cliente.js"></script>
 </body>
 </html>
