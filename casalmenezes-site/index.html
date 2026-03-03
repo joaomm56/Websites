@@ -13,7 +13,8 @@
 <!-- ── NAVEGAÇÃO ──────────────────────────────────────────── -->
 <nav>
   <div class="nav-logo">Casal Menezes <span>Hair Shop</span></div>
-  <ul class="nav-links">
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
+  <ul class="nav-links" id="navLinks">
     <li><a href="#servicos">Serviços</a></li>
     <li><a href="#sobre">Sobre Nós</a></li>
     <li><a href="#marcacao">Marcação</a></li>
@@ -142,6 +143,52 @@
 </section>
 
 <!-- ── MARCAÇÃO ───────────────────────────────────────────── -->
+<section id="localizacao" style="padding:0;background:var(--dark);">
+  <div class="location-grid">
+    <div class="location-info">
+      <div class="section-label" style="color:var(--gold)">Como Chegar</div>
+      <h2 class="section-title" style="color:var(--cream)">Visite-nos em <em style="color:var(--gold)">Portimão</em></h2>
+      <div class="location-details">
+        <div class="location-item">
+          <span class="location-icon">📍</span>
+          <div>
+            <div class="location-label">Morada</div>
+            <div class="location-value">R. Vasco da Gama 7<br>8500-739 Portimão</div>
+          </div>
+        </div>
+        <div class="location-item">
+          <span class="location-icon">📞</span>
+          <div>
+            <div class="location-label">Telefone</div>
+            <div class="location-value"><a href="tel:939804960" style="color:var(--cream);text-decoration:none;">939 804 960</a></div>
+          </div>
+        </div>
+        <div class="location-item">
+          <span class="location-icon">🕐</span>
+          <div>
+            <div class="location-label">Horário</div>
+            <div class="location-value">
+              Seg – Sex: 09h00 – 18h30<br>
+              Sábado: 09h00 – 16h30<br>
+              <span style="color:rgba(245,240,232,0.4)">Domingo: Encerrado</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="#marcacao" class="btn-primary" style="margin-top:8px;display:inline-block">Marcar Agora</a>
+    </div>
+    <div class="location-map">
+      <iframe
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3145.8!2d-8.5379!3d37.1362!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd1ab4b9a8b9a8b9%3A0x0!2sR.+Vasco+da+Gama+7%2C+8500-739+Portim%C3%A3o!5e0!3m2!1spt!2spt!4v1"
+        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade" title="Localização Casal Menezes Hair Shop">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- ── BANNER MARCAÇÕES ───────────────────────────────────── -->
+
 <section class="booking-section" id="marcacao">
   <div class="section-label">Reserva Online</div>
   <h2 class="section-title">
@@ -217,7 +264,7 @@
             <select id="stylist">
               <option value="">Sem preferência</option>
               <option value="ana">Ana Menezes</option>
-              <option value="anderson">Anderson Menezes</option>
+              <option value="joao">João Menezes</option>
             </select>
           </div>
         </div>
@@ -265,13 +312,15 @@
   </div>
 </section>
 
-<!-- ── BANNER MARCAÇÕES ───────────────────────────────────── -->
-<div style="background:var(--gold);padding:32px 80px;display:flex;justify-content:space-between;align-items:center;gap:24px;">
-  <div>
-    <div style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:400;color:var(--dark)">Já tem uma marcação?</div>
-    <div style="font-size:0.82rem;color:rgba(26,20,16,0.6);margin-top:4px;">Consulte, acompanhe ou cancele online a qualquer hora.</div>
+
+<!-- ── LOCALIZAÇÃO ────────────────────────────────────────── -->
+
+<div class="marcacoes-banner">
+  <div class="marcacoes-banner-text">
+    <div class="marcacoes-banner-title">Já tem uma marcação?</div>
+    <div class="marcacoes-banner-sub">Consulte, acompanhe ou cancele online a qualquer hora.</div>
   </div>
-  <a href="marcacoes.html" style="background:var(--dark);color:var(--cream);padding:14px 32px;border-radius:2px;text-decoration:none;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;white-space:nowrap;transition:opacity 0.3s;" onmouseover="this.style.opacity='.8'" onmouseout="this.style.opacity='1'">
+  <a href="marcacoes.html" class="marcacoes-banner-btn">
     Ver as Minhas Marcações →
   </a>
 </div>
@@ -310,6 +359,22 @@
   <div class="toast-msg"   id="toastMsg"></div>
 </div>
   <script src="js/supabase.js"></script>
+  <script>
+  function toggleMenu() {
+    const links = document.getElementById('navLinks');
+    const btn = document.getElementById('navHamburger');
+    links.classList.toggle('open');
+    btn.textContent = links.classList.contains('open') ? '✕' : '☰';
+  }
+  // Close menu on link click
+  document.querySelectorAll('.nav-links a').forEach(a => {
+    a.addEventListener('click', () => {
+      document.getElementById('navLinks').classList.remove('open');
+      document.getElementById('navHamburger').textContent = '☰';
+    });
+  });
+  </script>
   <script src="js/booking.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

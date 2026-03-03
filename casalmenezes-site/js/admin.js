@@ -33,6 +33,7 @@ async function doLogin() {
     document.getElementById('loginScreen').style.display = 'none';
     document.getElementById('app').classList.add('show');
     document.getElementById('sidebarUser').textContent = user.charAt(0).toUpperCase() + user.slice(1);
+    const mu = document.getElementById('mobileUser'); if (mu) mu.textContent = user.charAt(0).toUpperCase() + user.slice(1);
     initApp();
   } catch (err) {
     errEl.classList.add('show');
@@ -197,8 +198,12 @@ function changeMonth(dir) {
 function showPage(name, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
-  el.classList.add('active');
+  if (el) el.classList.add('active');
+  document.querySelectorAll('.mobile-nav-btn').forEach(b => {
+    if (b.dataset.page === name) b.classList.add('active');
+  });
 }
 
 function showToast(title, msg) {

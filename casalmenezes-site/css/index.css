@@ -118,6 +118,53 @@
 .about-gold-line { width: 60px; height: 2px; background: var(--gold); margin: 24px 0; }
 .about-text { font-size: 0.9rem; line-height: 1.9; color: var(--warm-gray); font-weight: 300; margin-bottom: 16px; }
 
+
+/* ── BANNER MARCAÇÕES ────────────────────────────────────── */
+.marcacoes-banner {
+  background: var(--gold); padding: 32px 80px;
+  display: flex; justify-content: space-between; align-items: center; gap: 24px;
+}
+.marcacoes-banner-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem; font-weight: 400; color: var(--dark);
+}
+.marcacoes-banner-sub {
+  font-size: 0.82rem; color: rgba(26,20,16,0.6); margin-top: 4px;
+}
+.marcacoes-banner-btn {
+  background: var(--dark); color: var(--cream);
+  padding: 14px 32px; border-radius: 2px; text-decoration: none;
+  font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase;
+  white-space: nowrap; transition: opacity 0.3s; flex-shrink: 0;
+}
+.marcacoes-banner-btn:hover { opacity: 0.8; }
+
+
+/* ── LOCALIZAÇÃO ─────────────────────────────────────────── */
+.location-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 460px; align-items: center;
+}
+.location-info {
+  padding: 60px 80px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+.location-details { margin: 36px 0; display: flex; flex-direction: column; gap: 24px; }
+.location-item {
+  display: flex; gap: 16px; align-items: flex-start;
+}
+.location-icon { font-size: 1.2rem; margin-top: 2px; flex-shrink: 0; }
+.location-label {
+  font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase;
+  color: var(--gold); margin-bottom: 6px;
+}
+.location-value {
+  font-size: 0.88rem; color: rgba(245,240,232,0.7);
+  line-height: 1.7; font-weight: 300;
+}
+.location-map { height: 460px; overflow: hidden; padding: 40px 60px 40px 0; box-sizing: border-box; }
+.location-map iframe { width: 90%; height: 200%; display: block; border: 0; border-radius: 4px; }
+
 /* ── FOOTER ──────────────────────────────────────────────── */
 footer {
   background: #0f0c09; color: rgba(245,240,232,0.5);
@@ -149,12 +196,40 @@ footer {
 /* ── RESPONSIVO ──────────────────────────────────────────── */
 @media (max-width: 900px) {
   .hero { grid-template-columns: 1fr; }
-  .hero-right { height: 300px; }
-  .hero-left  { padding: 60px 24px; }
-  .services-grid { grid-template-columns: 1fr; }
-  .stats { grid-template-columns: 1fr; }
+  .hero-right { height: 340px; order: -1; }
+  .hero-left  { padding: 48px 24px 60px; }
+  .hero-badge { width: 90px; height: 90px; bottom: 24px; right: 24px; }
+  .hero-badge-inner { font-size: 1.4rem; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .stats { grid-template-columns: repeat(3, 1fr); }
   .about-section { grid-template-columns: 1fr; }
   .about-img-container { height: 300px; }
-  footer { grid-template-columns: 1fr; padding: 40px 24px; gap: 32px; }
-  .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; }
+  .about-img-main { width: 100%; }
+  .about-img-accent { display: none; }
+  footer { grid-template-columns: 1fr 1fr; padding: 48px 24px; gap: 32px; }
+  .footer-brand { grid-column: 1 / -1; }
+  .footer-bottom { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+  .marcacoes-banner { padding: 28px 24px; gap: 16px; }
+  .marcacoes-banner-btn { padding: 12px 20px; font-size: 0.7rem; }
+  .location-grid { grid-template-columns: 1fr; }
+  .location-info { padding: 60px 24px 40px; }
+  .location-map { min-height: 320px; }
+}
+
+@media (max-width: 480px) {
+  .hero-left { padding: 36px 18px 48px; }
+  .hero-right { height: 260px; }
+  .hero-actions { flex-direction: column; gap: 12px; }
+  .hero-actions .btn-primary,
+  .hero-actions .btn-outline { width: 100%; text-align: center; }
+  .services-grid { grid-template-columns: 1fr; }
+  .service-card { padding: 36px 24px; }
+  .stats { grid-template-columns: 1fr; }
+  .stat-item { padding: 28px 18px; border-right: none; border-bottom: 1px solid rgba(201,169,110,0.15); }
+  footer { grid-template-columns: 1fr; padding: 36px 18px; }
+  .footer-bottom { padding: 18px; }
+  .marcacoes-banner { flex-direction: column; align-items: flex-start; padding: 24px 18px; gap: 16px; }
+  .marcacoes-banner-btn { width: 100%; text-align: center; padding: 14px; }
+  .location-info { padding: 40px 18px 32px; }
+  .location-map { min-height: 260px; }
 }

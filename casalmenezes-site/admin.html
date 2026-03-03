@@ -31,6 +31,21 @@
 <!-- ── APP ────────────────────────────────────────────────── -->
 <div class="app" id="app">
 
+
+  <!-- Barra mobile (visível só em ecrãs pequenos) -->
+  <div class="mobile-topbar">
+    <div class="mobile-brand">Casal Menezes <span>Hair Shop</span></div>
+    <div class="mobile-nav-links">
+      <button class="mobile-nav-btn active" onclick="showPage('dashboard', this)" data-page="dashboard">📊 Dashboard</button>
+      <button class="mobile-nav-btn" onclick="showPage('bookings', this)" data-page="bookings">📅 Marcações</button>
+      <button class="mobile-nav-btn" onclick="showPage('calendar', this)" data-page="calendar">🗓️ Calendário</button>
+    </div>
+    <div class="mobile-nav-actions">
+      <span id="mobileUser"></span>
+      <button onclick="doLogout()">Sair</button>
+    </div>
+  </div>
+
   <!-- Sidebar -->
   <aside class="sidebar">
     <div class="sidebar-brand">
@@ -194,5 +209,6 @@
 </div>
   <script src="js/supabase.js"></script>
   <script src="js/admin.js"></script>
+  <script defer src="/_vercel/insights/script.js"></script>
 </body>
 </html>

@@ -168,9 +168,11 @@ body { background: #eee8da; }
 .table-container {
   background: #fff; border-radius: 8px;
   border: 1px solid rgba(0,0,0,0.07);
-  overflow: hidden; box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  overflow-x: auto; overflow-y: hidden;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.05);
+  -webkit-overflow-scrolling: touch;
 }
-table { width: 100%; border-collapse: collapse; }
+table { width: 100%; min-width: 560px; border-collapse: collapse; }
 thead { background: var(--dark); }
 thead th {
   padding: 16px 20px; text-align: left;
@@ -301,15 +303,94 @@ td { padding: 16px 20px; font-size: 0.84rem; vertical-align: middle; color: var(
 .btn-drawer-confirm:disabled,
 .btn-drawer-cancel:disabled { opacity: 0.25; cursor: not-allowed; transform: none; }
 
+
+/* ── BARRA MOBILE ────────────────────────────────────────── */
+.mobile-topbar { display: none; }
+
+@media (max-width: 1000px) {
+  .mobile-topbar {
+    display: flex; flex-direction: column;
+    background: #0f0c09;
+    border-bottom: 1px solid rgba(201,169,110,0.15);
+    position: sticky; top: 0; z-index: 100;
+  }
+  .mobile-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-weight: 600; color: #fff;
+    padding: 14px 20px 10px;
+  }
+  .mobile-brand span { color: var(--gold); font-style: italic; }
+
+  .mobile-nav-links {
+    display: flex; overflow-x: auto; gap: 0;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .mobile-nav-links::-webkit-scrollbar { display: none; }
+
+  .mobile-nav-btn {
+    flex-shrink: 0; background: none; border: none; cursor: pointer;
+    color: rgba(245,240,232,0.5); font-family: 'Jost', sans-serif;
+    font-size: 0.78rem; padding: 12px 20px;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s; white-space: nowrap;
+  }
+  .mobile-nav-btn:hover { color: rgba(245,240,232,0.85); }
+  .mobile-nav-btn.active { color: var(--gold); border-bottom-color: var(--gold); }
+
+  .mobile-nav-actions {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 8px 20px; border-top: 1px solid rgba(255,255,255,0.05);
+    font-size: 0.75rem; color: rgba(245,240,232,0.35);
+  }
+  .mobile-nav-actions button {
+    background: none; border: 1px solid rgba(255,255,255,0.1);
+    color: rgba(245,240,232,0.35); cursor: pointer;
+    font-family: 'Jost', sans-serif; font-size: 0.65rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 5px 12px; border-radius: 3px; transition: all 0.2s;
+  }
+  .mobile-nav-actions button:hover { border-color: rgba(201,74,74,0.5); color: #f08080; }
+}
+
 /* ── RESPONSIVO ──────────────────────────────────────────── */
 @media (max-width: 1100px) {
   .kpi-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
 @media (max-width: 1000px) {
-  .app      { grid-template-columns: 1fr; }
-  .sidebar  { display: none; }
-  .page-hdr { padding: 24px 20px 20px; }
+  .app, .app.show { grid-template-columns: 1fr !important; }
+  .sidebar   { display: none !important; }
+  .page-hdr  { padding: 20px 20px 16px; }
+  .page-hdr h1 { font-size: 1.6rem; }
   .page-body { padding: 0 20px 40px; }
-  .content  { padding: 0; }
-  .drawer   { width: 100%; }
+  .content   { padding: 0; }
+  .drawer    { width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .kpi-grid  { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .kpi-card  { padding: 20px 16px; }
+  .kpi-value { font-size: 2.2rem; }
+  .kpi-label { font-size: 0.55rem; word-break: break-word; }
+  .kpi-sub   { font-size: 0.65rem; }
+  .page-hdr  { padding: 16px 16px 14px; }
+  .page-body { padding: 0 12px 32px; }
+  .filters   { flex-direction: column; }
+  .filter-input, .filter-select { width: 100%; }
+  .table-container { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { min-width: 560px; font-size: 0.78rem; }
+  td, thead th { padding: 12px 12px; }
+  .action-btns { flex-direction: column; gap: 4px; }
+  .btn-action  { font-size: 0.6rem; padding: 5px 8px; }
+  .cal-day   { min-height: 64px; padding: 6px; }
+  .cal-event { font-size: 0.6rem; padding: 2px 4px; }
+  .login-card { padding: 36px 20px; }
+  .section-heading { font-size: 1.1rem; }
+}
+
+@media (max-width: 400px) {
+  .kpi-grid  { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .kpi-value { font-size: 1.8rem; }
 }

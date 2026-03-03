@@ -26,7 +26,7 @@ body {
   font-family: 'Jost', sans-serif;
   background: var(--cream);
   color: var(--dark);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 /* ── NAVEGAÇÃO ───────────────────────────────────────────── */
@@ -72,6 +72,13 @@ nav {
   display: flex; align-items: center; gap: 8px; transition: color 0.3s;
 }
 .nav-back:hover { color: var(--dark); }
+
+
+/* ── MENU HAMBURGER ──────────────────────────────────────── */
+.nav-hamburger {
+  display: none; background: none; border: none; cursor: pointer;
+  font-size: 1.4rem; color: var(--dark); padding: 4px; line-height: 1;
+}
 
 /* ── BOTÕES ──────────────────────────────────────────────── */
 .btn-primary {
@@ -149,7 +156,28 @@ section { padding: 100px 80px; }
 
 /* ── RESPONSIVO ──────────────────────────────────────────── */
 @media (max-width: 900px) {
-  nav { padding: 20px 24px; }
-  .nav-links { display: none; }
+  nav { padding: 16px 24px; }
+  .nav-hamburger { display: block; }
+  .nav-links {
+    display: none; position: absolute; top: 100%; left: 0; right: 0;
+    flex-direction: column; gap: 0;
+    background: rgba(245,240,232,0.98); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(201,169,110,0.2);
+    padding: 0;
+  }
+  .nav-links.open { display: flex; }
+  .nav-links li { border-bottom: 1px solid rgba(201,169,110,0.1); }
+  .nav-links a { padding: 16px 24px; display: block; }
+  .nav-links a::after { display: none; }
+  .nav-book { margin: 0 !important; border-radius: 0 !important; padding: 16px 24px !important; }
   section { padding: 60px 24px; }
+  .toast { right: 16px; left: 16px; min-width: unset; }
+}
+
+@media (max-width: 480px) {
+  nav { padding: 14px 18px; }
+  .nav-logo { font-size: 1.15rem; }
+  .btn-primary, .btn-outline { padding: 14px 24px; width: 100%; text-align: center; box-sizing: border-box; }
+  section { padding: 48px 18px; }
+  .section-title { font-size: 2rem; }
 }

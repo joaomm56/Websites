@@ -132,8 +132,17 @@
 /* ── RESPONSIVO ──────────────────────────────────────────── */
 @media (max-width: 900px) {
   .booking-section  { padding: 60px 24px; }
-  .booking-layout   { grid-template-columns: 1fr; gap: 40px; }
-  .booking-form     { padding: 30px 24px; }
+  .booking-layout   { grid-template-columns: 1fr; gap: 32px; }
+  .booking-form     { padding: 32px 24px; }
   .form-row         { grid-template-columns: 1fr; }
-  .timeslots        { grid-template-columns: repeat(3, 1fr); }
+  .timeslots        { grid-template-columns: repeat(4, 1fr); }
+}
+
+@media (max-width: 480px) {
+  .booking-section  { padding: 48px 18px; }
+  .booking-form     { padding: 24px 18px; border-radius: 6px; }
+  .timeslots        { grid-template-columns: repeat(3, 1fr); gap: 6px; }
+  .timeslot         { padding: 10px 6px; font-size: 0.75rem; }
+  .btn-submit       { font-size: 0.7rem; padding: 16px; }
+  .form-row         { gap: 0; }
 }
