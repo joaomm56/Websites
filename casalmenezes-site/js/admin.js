@@ -56,14 +56,40 @@ async function initApp() {
   renderCalendar();
 }
 
+function showLoadingState() {
+  ['kpiToday','kpiPending','kpiWeek','kpiTotal'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.innerHTML = '<div class="spinner" style="margin:auto"></div>';
+  });
+  const todayTable = document.getElementById('todayTable');
+  if (todayTable) todayTable.innerHTML = `<div class="table-empty"><div class="spinner" style="margin:0 auto 12px"></div>A carregar marcações...</div>`;
+  const tbody = document.getElementById('bookingsTableBody');
+  if (tbody) tbody.innerHTML = `<tr><td colspan="6"><div class="table-empty"><div class="spinner" style="margin:0 auto 12px"></div>A carregar...</div></td></tr>`;
+}
+
 async function loadBookings() {
+  showLoadingState();
   try {
     BOOKINGS = await db.select('bookings', { order: 'date.asc,time.asc' });
   } catch (err) {
     console.error('loadBookings:', err);
     BOOKINGS = [];
   }
+  await autoCancelExpired();
   updateKPIs(); renderTodayTable(); renderBookingsTable();
+}
+
+async function autoCancelExpired() {
+  const today = new Date().toISOString().split('T')[0];
+  const expired = BOOKINGS.filter(b => b.status === 'pending' && b.date < today);
+  for (const b of expired) {
+    try {
+      await db.update('bookings', { status: 'cancelled' }, [['id', 'eq', b.id]]);
+      b.status = 'cancelled';
+    } catch (err) {
+      console.warn('autoCancelExpired:', err);
+    }
+  }
 }
 
 function updateKPIs() {
@@ -159,6 +185,7 @@ function openDrawer(id) {
     <div class="drawer-actions">
       ${canAct && b.status!=='confirmed' ? `<button class="btn-drawer-confirm" onclick="changeStatus('${b.id}','confirmed')">✓ Confirmar Marcação</button>` : ''}
       ${canAct ? `<button class="btn-drawer-cancel" onclick="changeStatus('${b.id}','cancelled')">✕ Cancelar Marcação</button>` : ''}
+      ${b.phone ? `<button class="btn-drawer-sms" onclick="sendSMS('${b.phone}','${b.first_name}','${b.date}','${b.time}','${b.service}')">📱 Enviar Lembrete SMS</button>` : ''}
     </div>`;
   document.getElementById('drawerOverlay').classList.add('open');
 }
@@ -181,7 +208,7 @@ function renderCalendar() {
     else if (i >= firstDay + daysInMonth) { dayNum = i - firstDay - daysInMonth + 1; thisMonth = false; }
     else                                  { dayNum = i - firstDay + 1; }
     if (thisMonth) dateStr = `${calYear}-${String(calMonth+1).padStart(2,'0')}-${String(dayNum).padStart(2,'0')}`;
-    const dayB = dateStr ? BOOKINGS.filter(b => b.date === dateStr) : [];
+    const dayB = dateStr ? BOOKINGS.filter(b => b.date === dateStr && b.status !== 'cancelled') : [];
     html += `<div class="cal-day${!thisMonth?' other-month':''}${dateStr===today?' today':''}">
       <div class="cal-day-num">${dayNum}</div>
       ${dayB.slice(0,3).map(b=>`<div class="cal-event ${b.status}" onclick="openDrawer('${b.id}')">${b.time} ${b.first_name}</div>`).join('')}
@@ -197,6 +224,25 @@ function changeMonth(dir) {
   renderCalendar();
 }
 
+function exportCSV() {
+  if (!BOOKINGS.length) { showToast('Sem dados', 'Não há marcações para exportar.'); return; }
+  const headers = ['Nome','Apelido','Telemóvel','Email','Serviço','Data','Hora','Profissional','Estado','Observações'];
+  const rows = BOOKINGS.map(b => [
+    b.first_name, b.last_name, b.phone, b.email || '',
+    SVC[b.service] || b.service, b.date, b.time,
+    STL[b.stylist] || b.stylist || '',
+    {pending:'Pendente',confirmed:'Confirmado',cancelled:'Cancelado'}[b.status] || b.status,
+    (b.notes || '').replace(/"/g,'""')
+  ].map(v => `"${v}"`).join(','));
+  const csv = '\uFEFF' + [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  a.href = url; a.download = `marcacoes_${new Date().toISOString().split('T')[0]}.csv`;
+  a.click(); URL.revokeObjectURL(url);
+  showToast('Exportado!', `${BOOKINGS.length} marcações exportadas.`);
+}
+
 function showPage(name, el) {
   document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
   document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
@@ -206,7 +252,82 @@ function showPage(name, el) {
   document.querySelectorAll('.mobile-nav-btn').forEach(b => {
     if (b.dataset.page === name) b.classList.add('active');
   });
-  if (name === 'settings') initSettings();
+  if (name === 'settings')  initSettings();
+  if (name === 'analytics') renderAnalytics();
+  if (name === 'services')  renderServicesList();
+}
+
+/* ── ANALYTICS ────────────────────────────────────────────── */
+let chartWeekly = null, chartService = null, chartStylist = null, chartStatus = null;
+
+function renderAnalytics() {
+  if (!BOOKINGS.length) return;
+
+  // Últimas 8 semanas
+  const weekLabels = [], weekData = [];
+  const now = new Date();
+  for (let w = 7; w >= 0; w--) {
+    const start = new Date(now); start.setDate(now.getDate() - now.getDay() - w * 7);
+    const end   = new Date(start); end.setDate(start.getDate() + 6);
+    const label = `${start.getDate()}/${start.getMonth()+1}`;
+    weekLabels.push(label);
+    weekData.push(BOOKINGS.filter(b => {
+      const d = new Date(b.date);
+      return d >= start && d <= end && b.status !== 'cancelled';
+    }).length);
+  }
+
+  // Por serviço
+  const svcCounts = {};
+  BOOKINGS.filter(b => b.status !== 'cancelled').forEach(b => {
+    svcCounts[SVC[b.service] || b.service] = (svcCounts[SVC[b.service] || b.service] || 0) + 1;
+  });
+
+  // Por profissional
+  const stlCounts = {};
+  BOOKINGS.filter(b => b.status !== 'cancelled').forEach(b => {
+    const k = STL[b.stylist] || b.stylist || 'Sem preferência';
+    stlCounts[k] = (stlCounts[k] || 0) + 1;
+  });
+
+  // Por estado
+  const statusCounts = {
+    Pendente:   BOOKINGS.filter(b => b.status === 'pending').length,
+    Confirmado: BOOKINGS.filter(b => b.status === 'confirmed').length,
+    Cancelado:  BOOKINGS.filter(b => b.status === 'cancelled').length,
+  };
+
+  const GOLD = 'rgba(201,169,110,0.8)'; const GOLD_B = 'rgba(201,169,110,1)';
+  const GREEN = 'rgba(74,158,107,0.8)'; const ORANGE = 'rgba(201,124,58,0.8)'; const RED = 'rgba(201,74,74,0.8)';
+  const chartDefaults = { responsive: true, plugins: { legend: { labels: { font: { family: 'Jost' }, color: '#6b6259' } } } };
+
+  if (chartWeekly) chartWeekly.destroy();
+  chartWeekly = new Chart(document.getElementById('chartWeekly'), {
+    type: 'bar',
+    data: { labels: weekLabels, datasets: [{ label: 'Marcações', data: weekData, backgroundColor: GOLD, borderColor: GOLD_B, borderWidth: 1, borderRadius: 4 }] },
+    options: { ...chartDefaults, scales: { y: { beginAtZero: true, ticks: { stepSize: 1, color: '#6b6259' }, grid: { color: 'rgba(0,0,0,0.05)' } }, x: { ticks: { color: '#6b6259' }, grid: { display: false } } } }
+  });
+
+  if (chartService) chartService.destroy();
+  chartService = new Chart(document.getElementById('chartService'), {
+    type: 'doughnut',
+    data: { labels: Object.keys(svcCounts), datasets: [{ data: Object.values(svcCounts), backgroundColor: [GOLD,'rgba(180,140,80,0.8)',GREEN,ORANGE,RED,'rgba(100,80,60,0.8)'], borderWidth: 2, borderColor: '#fff' }] },
+    options: { ...chartDefaults }
+  });
+
+  if (chartStylist) chartStylist.destroy();
+  chartStylist = new Chart(document.getElementById('chartStylist'), {
+    type: 'bar',
+    data: { labels: Object.keys(stlCounts), datasets: [{ label: 'Marcações', data: Object.values(stlCounts), backgroundColor: GREEN, borderRadius: 4 }] },
+    options: { ...chartDefaults, indexAxis: 'y', scales: { x: { beginAtZero: true, ticks: { stepSize: 1, color: '#6b6259' }, grid: { color: 'rgba(0,0,0,0.05)' } }, y: { ticks: { color: '#6b6259' }, grid: { display: false } } } }
+  });
+
+  if (chartStatus) chartStatus.destroy();
+  chartStatus = new Chart(document.getElementById('chartStatus'), {
+    type: 'doughnut',
+    data: { labels: Object.keys(statusCounts), datasets: [{ data: Object.values(statusCounts), backgroundColor: [ORANGE, GREEN, RED], borderWidth: 2, borderColor: '#fff' }] },
+    options: { ...chartDefaults }
+  });
 }
 
 function showToast(title, msg) {
@@ -220,6 +341,80 @@ function showToast(title, msg) {
 document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
 });
+
+/* ── SMS ──────────────────────────────────────────────────── */
+const SVC_FULL = { corte:'Corte & Styling', coloracao:'Coloração', tratamento:'Tratamentos Capilares', noiva:'Penteados Noiva', massagem:'Massagem Capilar', barba:'Barba & Bigode' };
+
+async function sendSMS(phone, name, date, time, service) {
+  const svcName = SVC_FULL[service] || service;
+  const message = `Olá ${name}! Lembrete: tem uma marcação de ${svcName} em ${date} às ${time} no Casal Menezes Hair Shop. Até lá! 😊`;
+  try {
+    const res = await fetch('/api/send-sms', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ to: phone, message })
+    });
+    const data = await res.json();
+    if (data.success) showToast('SMS enviado!', `Lembrete enviado para ${name}.`);
+    else showToast('Erro SMS', data.error || 'Não foi possível enviar.');
+  } catch (err) {
+    showToast('Erro SMS', 'Verifique as configurações Twilio no Vercel.');
+  }
+}
+
+/* ── SERVIÇOS ─────────────────────────────────────────────── */
+const DEFAULT_SERVICES = [
+  { id:'corte',     icon:'✂️', name:'Corte & Styling',      desc:'Cortes personalizados para homem e mulher, adaptados ao seu estilo de vida e tipo de cabelo.',          price:15 },
+  { id:'coloracao', icon:'🎨', name:'Coloração',             desc:'Colorações, mechas, balayage e técnicas de cor que realçam a sua beleza natural.',                      price:40 },
+  { id:'tratamento',icon:'✨', name:'Tratamentos Capilares', desc:'Hidratação profunda, queratina, botox capilar e outros tratamentos regeneradores.',                      price:35 },
+  { id:'noiva',     icon:'👰', name:'Penteados Noiva',       desc:'Penteados especiais para o seu dia mais especial, com sessão de teste incluída.',                        price:80 },
+  { id:'massagem',  icon:'💆', name:'Massagem Capilar',      desc:'Relaxamento do couro cabeludo com óleos essenciais que estimulam o crescimento.',                        price:20 },
+  { id:'barba',     icon:'🪒', name:'Barba & Bigode',        desc:'Aparar, modelar e cuidar da barba com produtos premium para um acabamento perfeito.',                    price:12 },
+];
+
+function getServices() {
+  try {
+    const stored = localStorage.getItem('cm_services');
+    return stored ? JSON.parse(stored) : DEFAULT_SERVICES;
+  } catch { return DEFAULT_SERVICES; }
+}
+
+function renderServicesList() {
+  const services = getServices();
+  document.getElementById('servicesList').innerHTML = services.map((s, i) => `
+    <div class="svc-edit-card">
+      <div class="svc-edit-icon">
+        <input type="text" class="svc-icon-input" data-i="${i}" data-field="icon" value="${s.icon}" maxlength="4">
+      </div>
+      <div class="svc-edit-fields">
+        <div class="svc-field-row">
+          <div class="sfield">
+            <label class="sfield-label">Nome</label>
+            <input type="text" class="sfield-input" data-i="${i}" data-field="name" value="${s.name}">
+          </div>
+          <div class="sfield sfield--price">
+            <label class="sfield-label">Preço a partir de (€)</label>
+            <input type="number" class="sfield-input" data-i="${i}" data-field="price" value="${s.price}" min="0" step="1">
+          </div>
+        </div>
+        <div class="sfield">
+          <label class="sfield-label">Descrição</label>
+          <textarea class="sfield-input" data-i="${i}" data-field="desc" rows="2">${s.desc}</textarea>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function saveServices() {
+  const services = getServices();
+  document.querySelectorAll('#servicesList [data-i]').forEach(el => {
+    const i = parseInt(el.dataset.i);
+    const field = el.dataset.field;
+    services[i][field] = field === 'price' ? parseFloat(el.value) || 0 : el.value;
+  });
+  localStorage.setItem('cm_services', JSON.stringify(services));
+  showToast('Guardado!', 'Serviços atualizados com sucesso.');
+}
 
 /* ── DEFINIÇÕES ──────────────────────────────────────────── */
 function initSettings() {

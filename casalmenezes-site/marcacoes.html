@@ -8,6 +8,7 @@
   <meta name="robots" content="noindex, follow">
   <link rel="canonical" href="https://casalmenezes.vercel.app/marcacoes.html">
   <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/booking.css">
   <link rel="stylesheet" href="css/cliente.css">
 </head>
 <body>
@@ -36,12 +37,12 @@
       <p>Introduza o seu número de telemóvel <strong>e</strong> email para ver as suas marcações. Ambos os campos são obrigatórios.</p>
       <div class="form-group">
         <label>Telemóvel *</label>
-        <input type="tel" id="searchPhone" placeholder="+351 9XX XXX XXX" required>
+        <input type="tel" id="searchPhone" placeholder="+351 9XX XXX XXX" required autocomplete="tel">
       </div>
       <div class="and-divider">e</div>
       <div class="form-group">
         <label>Email *</label>
-        <input type="email" id="searchEmail" placeholder="email@exemplo.com" required>
+        <input type="email" id="searchEmail" placeholder="email@exemplo.com" required autocomplete="email">
       </div>
       <button class="btn-search" id="searchBtn" onclick="searchBookings()">
         Ver as Minhas Marcações
@@ -70,6 +71,40 @@
   </div>
 
 </main>
+
+<!-- ── MODAL DE REAGENDAMENTO ──────────────────────────────── -->
+<div class="modal-overlay" id="rescheduleModal">
+  <div class="modal modal-lg">
+    <div class="modal-icon">📅</div>
+    <h3>Reagendar marcação</h3>
+    <p>Escolha a nova data e hora para a sua marcação.</p>
+    <div class="form-group">
+      <label>Nova data *</label>
+      <input type="date" id="rescheduleDate" oninput="onRescheduleDateChange()">
+    </div>
+    <div class="form-group">
+      <label>Profissional</label>
+      <select id="rescheduleStylist" onchange="onRescheduleDateChange()">
+        <option value="">Sem preferência</option>
+        <option value="ana">Ana Menezes</option>
+        <option value="anderson">Anderson Menezes</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Horário * <span id="rescheduleSlotsLabel" style="font-size:0.7rem;color:var(--warm-gray);text-transform:none;letter-spacing:0;margin-left:6px;font-style:italic;"></span></label>
+      <div class="timeslots reschedule-slots" id="rescheduleSlots">
+        <div style="grid-column:1/-1;text-align:center;padding:20px;color:var(--warm-gray);font-size:0.85rem;">
+          Escolha primeiro uma data acima
+        </div>
+      </div>
+      <input type="hidden" id="rescheduleTime">
+    </div>
+    <div class="modal-actions">
+      <button class="btn-modal-keep" onclick="closeRescheduleModal()">Cancelar</button>
+      <button class="btn-modal-confirm" id="rescheduleConfirmBtn" onclick="confirmReschedule()" disabled>Confirmar</button>
+    </div>
+  </div>
+</div>
 
 <!-- ── MODAL DE CANCELAMENTO ───────────────────────────────── -->
 <div class="modal-overlay" id="cancelModal">

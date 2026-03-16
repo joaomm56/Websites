@@ -7,6 +7,7 @@
   <meta name="robots" content="noindex, nofollow">
   <link rel="stylesheet" href="css/main.css">
   <link rel="stylesheet" href="css/admin.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 </head>
 <body>
 
@@ -40,6 +41,8 @@
       <button class="mobile-nav-btn active" onclick="showPage('dashboard', this)" data-page="dashboard">📊 Dashboard</button>
       <button class="mobile-nav-btn" onclick="showPage('bookings', this)" data-page="bookings">📅 Marcações</button>
       <button class="mobile-nav-btn" onclick="showPage('calendar', this)" data-page="calendar">🗓️ Calendário</button>
+      <button class="mobile-nav-btn" onclick="showPage('analytics', this)" data-page="analytics">📈 Analytics</button>
+      <button class="mobile-nav-btn" onclick="showPage('services', this)" data-page="services">💇 Serviços</button>
       <button class="mobile-nav-btn" onclick="showPage('settings', this)" data-page="settings">⚙️ Definições</button>
     </div>
     <div class="mobile-nav-actions">
@@ -64,6 +67,12 @@
       </div>
       <div class="sidebar-link" onclick="showPage('calendar', this)">
         <span class="icon">🗓️</span> Calendário
+      </div>
+      <div class="sidebar-link" onclick="showPage('analytics', this)">
+        <span class="icon">📈</span> Analytics
+      </div>
+      <div class="sidebar-link" onclick="showPage('services', this)">
+        <span class="icon">💇</span> Serviços
       </div>
       <div class="nav-section" style="margin-top:20px">Definições</div>
       <div class="sidebar-link" onclick="showPage('settings', this)">
@@ -125,6 +134,7 @@
           <h1>Todas as <em>Marcações</em></h1>
           <p>Gerir e acompanhar todas as marcações dos clientes</p>
         </div>
+        <button class="btn-export" onclick="exportCSV()">⬇ Exportar CSV</button>
       </div>
       <div class="page-body">
       <div class="filters">
@@ -196,6 +206,51 @@
       </div><!-- /page-body -->
     </div>
 
+
+    <!-- ── ANALYTICS ───────────────────────────────────────── -->
+    <div class="page" id="page-analytics">
+      <div class="page-hdr">
+        <div>
+          <h1><em>Analytics</em> &amp; Histórico</h1>
+          <p>Evolução e distribuição das marcações</p>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="analytics-grid">
+          <div class="chart-card chart-card--wide">
+            <div class="chart-card-title">Marcações – últimas 8 semanas</div>
+            <canvas id="chartWeekly" height="80"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Por serviço</div>
+            <canvas id="chartService" height="220"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Por profissional</div>
+            <canvas id="chartStylist" height="220"></canvas>
+          </div>
+          <div class="chart-card">
+            <div class="chart-card-title">Por estado</div>
+            <canvas id="chartStatus" height="220"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── SERVIÇOS ─────────────────────────────────────────── -->
+    <div class="page" id="page-services">
+      <div class="page-hdr">
+        <div>
+          <h1>Gestão de <em>Serviços</em></h1>
+          <p>Editar nomes, descrições e preços exibidos no site público</p>
+        </div>
+        <button class="btn-export" onclick="saveServices()">💾 Guardar</button>
+      </div>
+      <div class="page-body">
+        <div id="servicesList"></div>
+        <p class="services-note">As alterações ficam guardadas neste dispositivo e refletem-se imediatamente no site público.</p>
+      </div>
+    </div>
 
     <div class="page" id="page-settings">
       <div class="page-hdr">

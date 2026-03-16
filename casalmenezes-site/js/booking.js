@@ -123,6 +123,12 @@ function normalizePhone(phone) {
   return phone.trim().replace(/\s+/g, '').replace(/^(\+351|00351)/, '');
 }
 
+function validatePhonePT(phone) {
+  // Após normalização (sem +351/00351), deve ter 9 dígitos a começar por 9 (móvel) ou 2 (fixo)
+  const normalized = normalizePhone(phone);
+  return /^[29]\d{8}$/.test(normalized);
+}
+
 function validateForm() {
   const fname   = document.getElementById('fname').value.trim();
   const lname   = document.getElementById('lname').value.trim();
@@ -132,6 +138,10 @@ function validateForm() {
   const date    = document.getElementById('bookDate').value;
   if (!fname || !lname || !phone || !email || !service || !date || !selectedTime) {
     showToast('Campos em falta', 'Por favor preencha todos os campos obrigatórios (*).', true);
+    return false;
+  }
+  if (!validatePhonePT(phone)) {
+    showToast('Telemóvel inválido', 'Introduza um número português válido (ex: 912 345 678).', true);
     return false;
   }
   return true;
@@ -167,7 +177,14 @@ async function submitBooking() {
   try {
     await db.insert('bookings', booking);
     document.getElementById('formContent').style.display = 'none';
-    document.getElementById('successMsg').classList.add('show');
+    const successEl = document.getElementById('successMsg');
+    successEl.classList.add('show');
+    // Gerar link Google Calendar
+    const gcLink = document.getElementById('gcalLink');
+    if (gcLink) {
+      gcLink.href = buildGCalLink(booking);
+      gcLink.style.display = 'inline-block';
+    }
     showToast('✅ Confirmado!', `Marcação para ${booking.date} às ${booking.time}`);
   } catch (err) {
     console.error('submitBooking error:', err);
@@ -177,9 +194,23 @@ async function submitBooking() {
   }
 }
 
+function buildGCalLink(booking) {
+  const SERVICE_NAMES_FULL = { corte:'Corte & Styling', coloracao:'Coloração', tratamento:'Tratamentos Capilares', noiva:'Penteados Noiva', massagem:'Massagem Capilar', barba:'Barba & Bigode' };
+  const [h, m] = booking.time.split(':').map(Number);
+  const startDate = new Date(booking.date + 'T' + booking.time + ':00');
+  const endDate   = new Date(startDate.getTime() + 60 * 60 * 1000); // +1h
+  const fmt = d => d.toISOString().replace(/[-:]/g,'').replace(/\.\d{3}/,'');
+  const title   = encodeURIComponent(`Casal Menezes – ${SERVICE_NAMES_FULL[booking.service] || booking.service}`);
+  const details = encodeURIComponent(`Profissional: ${booking.stylist ? (booking.stylist === 'ana' ? 'Ana Menezes' : 'Anderson Menezes') : 'Sem preferência'}${booking.notes ? '\nObservações: ' + booking.notes : ''}`);
+  const location = encodeURIComponent('R. Vasco da Gama 7, 8500-739 Portimão');
+  return `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${fmt(startDate)}/${fmt(endDate)}&details=${details}&location=${location}`;
+}
+
 function resetForm() {
   document.getElementById('formContent').style.display = 'block';
   document.getElementById('successMsg').classList.remove('show');
+  const gcLink = document.getElementById('gcalLink');
+  if (gcLink) gcLink.style.display = 'none';
   document.querySelectorAll('input[type=text],input[type=tel],input[type=email],input[type=date],select,textarea')
     .forEach(el => el.value = '');
   clearSlots();

@@ -54,12 +54,12 @@
 <!-- ── NAVEGAÇÃO ──────────────────────────────────────────── -->
 <nav>
   <div class="nav-logo">Casal Menezes <span>Hair Shop</span></div>
-  <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menu">☰</button>
-  <ul class="nav-links" id="navLinks">
+  <button class="nav-hamburger" id="navHamburger" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false" aria-controls="navLinks">☰</button>
+  <ul class="nav-links" id="navLinks" role="navigation" aria-label="Menu principal">
     <li><a href="#servicos">Serviços</a></li>
     <li><a href="#sobre">Sobre Nós</a></li>
     <li><a href="#marcacao">Marcação</a></li>
-    <li><a href="minhas-marcacoes.html">As Minhas Marcações</a></li>
+    <li><a href="marcacoes.html">As Minhas Marcações</a></li>
     <li><a href="#marcacao" class="nav-book">Marcar Agora</a></li>
   </ul>
 </nav>
@@ -158,10 +158,10 @@
     <div class="about-img-container">
       <img class="about-img-main"
            src="https://images.unsplash.com/photo-1522337360788-8b13dee7a37e?w=600&q=80"
-           alt="Interior do salão">
+           alt="Interior do salão" loading="lazy">
       <img class="about-img-accent"
            src="https://images.unsplash.com/photo-1559599101-f09722fb4948?w=400&q=80"
-           alt="Detalhe do serviço">
+           alt="Detalhe do serviço" loading="lazy">
     </div>
     <div>
       <div class="section-label">A Nossa História</div>
@@ -266,21 +266,21 @@
         <div class="form-row">
           <div class="form-group">
             <label>Nome *</label>
-            <input type="text" id="fname" placeholder="O seu nome" required>
+            <input type="text" id="fname" placeholder="O seu nome" required autocomplete="given-name">
           </div>
           <div class="form-group">
             <label>Apelido *</label>
-            <input type="text" id="lname" placeholder="O seu apelido" required>
+            <input type="text" id="lname" placeholder="O seu apelido" required autocomplete="family-name">
           </div>
         </div>
         <div class="form-row">
           <div class="form-group">
             <label>Telemóvel *</label>
-            <input type="tel" id="phone" placeholder="+351 9XX XXX XXX" required>
+            <input type="tel" id="phone" placeholder="+351 9XX XXX XXX" required autocomplete="tel">
           </div>
           <div class="form-group">
             <label>Email *</label>
-            <input type="email" id="email" placeholder="email@exemplo.com" required>
+            <input type="email" id="email" placeholder="email@exemplo.com" required autocomplete="email">
           </div>
         </div>
         <div class="form-group">
@@ -344,9 +344,14 @@
         <div class="success-icon">✅</div>
         <h3>Marcação Recebida!</h3>
         <p>Obrigado pela sua marcação.<br>Entraremos em contacto para confirmar brevemente.</p>
-        <button class="btn-primary" style="margin-top:24px;border:none;cursor:pointer" onclick="resetForm()">
-          Nova Marcação
-        </button>
+        <div style="display:flex;flex-direction:column;align-items:center;gap:12px;margin-top:24px;">
+          <a id="gcalLink" href="#" target="_blank" rel="noopener" style="display:none;background:rgba(255,255,255,0.1);border:1px solid rgba(201,169,110,0.3);color:var(--gold);padding:12px 24px;border-radius:2px;font-size:0.72rem;letter-spacing:0.2em;text-transform:uppercase;text-decoration:none;transition:all 0.3s">
+            📅 Adicionar ao Google Calendar
+          </a>
+          <button class="btn-primary" style="border:none;cursor:pointer" onclick="resetForm()">
+            Nova Marcação
+          </button>
+        </div>
       </div>
     </div>
 
@@ -361,7 +366,7 @@
     <div class="marcacoes-banner-title">Já tem uma marcação?</div>
     <div class="marcacoes-banner-sub">Consulte, acompanhe ou cancele online a qualquer hora.</div>
   </div>
-  <a href="minhas-marcacoes.html" class="marcacoes-banner-btn">
+  <a href="marcacoes.html" class="marcacoes-banner-btn">
     Ver as Minhas Marcações →
   </a>
 </div>
@@ -401,11 +406,43 @@
 </div>
   <script src="js/supabase.js"></script>
   <script>
+  // Carregar serviços personalizados do localStorage (definidos no admin)
+  (function() {
+    try {
+      const stored = localStorage.getItem('cm_services');
+      if (!stored) return;
+      const services = JSON.parse(stored);
+      const cards = document.querySelectorAll('.service-card');
+      services.forEach((svc, i) => {
+        if (!cards[i]) return;
+        const c = cards[i];
+        c.querySelector('.service-icon').textContent = svc.icon;
+        c.querySelector('.service-name').textContent = svc.name;
+        c.querySelector('.service-desc').textContent = svc.desc;
+        c.querySelector('.service-price').textContent = `A partir de €${svc.price}`;
+        c.dataset.service = svc.id;
+      });
+      // Atualizar select de serviços no formulário
+      const select = document.getElementById('service');
+      if (select) {
+        const placeholder = select.options[0];
+        select.innerHTML = '';
+        select.appendChild(placeholder);
+        services.forEach(svc => {
+          const opt = new Option(svc.name, svc.id);
+          select.appendChild(opt);
+        });
+      }
+    } catch(e) {}
+  })();
+
   function toggleMenu() {
     const links = document.getElementById('navLinks');
     const btn = document.getElementById('navHamburger');
     links.classList.toggle('open');
-    btn.textContent = links.classList.contains('open') ? '✕' : '☰';
+    const isOpen = links.classList.contains('open');
+    btn.textContent = isOpen ? '✕' : '☰';
+    btn.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
   }
   // Close menu on link click
   document.querySelectorAll('.nav-links a').forEach(a => {

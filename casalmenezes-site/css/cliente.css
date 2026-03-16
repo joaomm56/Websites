@@ -201,6 +201,14 @@ main { padding-top: 80px; min-height: 100vh; }
 
 .booking-actions { display: flex; flex-direction: column; gap: 10px; align-items: flex-end; }
 
+.btn-reschedule {
+  font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--gold); cursor: pointer; background: none;
+  border: 1px solid rgba(201,169,110,0.35); padding: 7px 14px;
+  border-radius: 4px; font-family: 'Jost', sans-serif; transition: all 0.25s;
+}
+.btn-reschedule:hover { background: rgba(201,169,110,0.1); border-color: var(--gold); }
+
 .btn-cancel {
   font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase;
   color: var(--red); cursor: pointer; background: none;
@@ -259,6 +267,46 @@ main { padding-top: 80px; min-height: 100vh; }
   border-radius: 4px; transition: opacity 0.25s;
 }
 .btn-modal-cancel:hover { opacity: 0.85; }
+
+.btn-modal-confirm {
+  flex: 1; background: var(--gold); color: var(--dark); border: none;
+  cursor: pointer; padding: 14px; font-family: 'Jost', sans-serif;
+  font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+  border-radius: 4px; transition: all 0.25s; font-weight: 500;
+}
+.btn-modal-confirm:hover:not(:disabled) { background: var(--gold-light); }
+.btn-modal-confirm:disabled { opacity: 0.35; cursor: not-allowed; }
+
+/* ── MODAL GRANDE (reagendamento) ────────────────────────── */
+.modal-lg { max-width: 540px; }
+.modal-lg .form-group { margin-bottom: 18px; }
+.modal-lg .form-group label {
+  display: block; font-size: 0.62rem; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--warm-gray); margin-bottom: 8px; font-weight: 500;
+}
+.modal-lg .form-group input,
+.modal-lg .form-group select {
+  width: 100%; border: 1.5px solid rgba(0,0,0,0.1);
+  border-radius: 4px; padding: 11px 14px;
+  font-family: 'Jost', sans-serif; font-size: 0.9rem; font-weight: 300;
+  outline: none; transition: border-color 0.25s;
+  background: var(--cream); color: var(--dark); -webkit-appearance: none;
+}
+.modal-lg .form-group input:focus,
+.modal-lg .form-group select:focus { border-color: var(--gold); background: #fff; }
+
+/* Slots no tema claro (modal de reagendamento) */
+.reschedule-slots { margin-top: 0; }
+.modal .slot { background: var(--cream); border-color: rgba(0,0,0,0.1); color: var(--dark); }
+.modal .slot:hover:not(.occupied) { border-color: var(--gold); }
+.modal .slot.selected { background: var(--gold); border-color: var(--gold); color: var(--dark); }
+.modal .slot.available .slot-time  { color: var(--dark); }
+.modal .slot.available .slot-label { color: var(--green); }
+.modal .slot.selected  .slot-time  { color: var(--dark); font-weight: 600; }
+.modal .slot.selected  .slot-label { color: rgba(26,20,16,0.6); }
+.modal .slot.occupied  { background: rgba(0,0,0,0.03); border-color: rgba(0,0,0,0.07); }
+.modal .slot.occupied .slot-time  { color: rgba(0,0,0,0.2); text-decoration: line-through; }
+.modal .slot.occupied .slot-label { color: rgba(201,74,74,0.6); }
 
 /* ── RESPONSIVO ──────────────────────────────────────────── */
 @media (max-width: 700px) {
