@@ -185,7 +185,6 @@ function openDrawer(id) {
     <div class="drawer-actions">
       ${canAct && b.status!=='confirmed' ? `<button class="btn-drawer-confirm" onclick="changeStatus('${b.id}','confirmed')">✓ Confirmar Marcação</button>` : ''}
       ${canAct ? `<button class="btn-drawer-cancel" onclick="changeStatus('${b.id}','cancelled')">✕ Cancelar Marcação</button>` : ''}
-      ${b.phone ? `<button class="btn-drawer-sms" onclick="sendSMS('${b.phone}','${b.first_name}','${b.date}','${b.time}','${b.service}')">📱 Enviar Lembrete SMS</button>` : ''}
     </div>`;
   document.getElementById('drawerOverlay').classList.add('open');
 }
@@ -342,25 +341,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('loginPass').addEventListener('keydown', e => { if (e.key==='Enter') doLogin(); });
 });
 
-/* ── SMS ──────────────────────────────────────────────────── */
-const SVC_FULL = { corte:'Corte & Styling', coloracao:'Coloração', tratamento:'Tratamentos Capilares', noiva:'Penteados Noiva', massagem:'Massagem Capilar', barba:'Barba & Bigode' };
-
-async function sendSMS(phone, name, date, time, service) {
-  const svcName = SVC_FULL[service] || service;
-  const message = `Olá ${name}! Lembrete: tem uma marcação de ${svcName} em ${date} às ${time} no Casal Menezes Hair Shop. Até lá! 😊`;
-  try {
-    const res = await fetch('/api/send-sms', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ to: phone, message })
-    });
-    const data = await res.json();
-    if (data.success) showToast('SMS enviado!', `Lembrete enviado para ${name}.`);
-    else showToast('Erro SMS', data.error || 'Não foi possível enviar.');
-  } catch (err) {
-    showToast('Erro SMS', 'Verifique as configurações Twilio no Vercel.');
-  }
-}
 
 /* ── SERVIÇOS ─────────────────────────────────────────────── */
 const DEFAULT_SERVICES = [
